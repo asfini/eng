@@ -452,26 +452,10 @@ table.data-table input[type=number]{
 <div class="auth-screen" id="authScreen">
   <div class="auth-card">
     <div class="auth-brand">TOEFL TRACKER</div>
-    <h1 class="auth-title" id="authTitle">Buat Akun</h1>
-    <p class="auth-sub" id="authSub">Tracker ini dikunci khusus untuk 1 akun di perangkat ini. Semua data (checklist, vocab, skor, catatan) tersimpan 100% lokal di browser — tidak ada server.</p>
+    <h1 class="auth-title">Selamat Datang Kembali</h1>
+    <p class="auth-sub">Masukkan password untuk melanjutkan progress belajarmu. Semua data tersimpan 100% lokal di browser ini.</p>
 
-    <form class="auth-form" id="authSetupForm" onsubmit="return false;">
-      <div class="form-field">
-        <label>Nama</label>
-        <input type="text" id="setupName" autocomplete="username" placeholder="Nama kamu">
-      </div>
-      <div class="form-field">
-        <label>Password</label>
-        <input type="password" id="setupPassword" autocomplete="new-password" placeholder="min. 4 karakter">
-      </div>
-      <div class="form-field">
-        <label>Konfirmasi Password</label>
-        <input type="password" id="setupPassword2" autocomplete="new-password" placeholder="ulangi password">
-      </div>
-      <button type="button" class="btn auth-submit" id="setupBtn">Buat Akun &amp; Mulai</button>
-    </form>
-
-    <form class="auth-form" id="authLoginForm" style="display:none" onsubmit="return false;">
+    <form class="auth-form" id="authLoginForm" onsubmit="return false;">
       <div class="form-field">
         <label>Masuk sebagai</label>
         <div class="auth-fixed-name" id="loginFixedName">-</div>
@@ -481,7 +465,7 @@ table.data-table input[type=number]{
         <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••">
       </div>
       <button type="button" class="btn auth-submit" id="loginBtn">Masuk</button>
-      <button type="button" class="auth-forgot" id="forgotBtn">Lupa password? Hapus akun ini &amp; mulai ulang</button>
+      <button type="button" class="auth-forgot" id="forgotBtn">Lupa password? Reset ke default &amp; hapus semua progress</button>
     </form>
 
     <div class="auth-error" id="authError"></div>
@@ -847,65 +831,45 @@ function hashPassword(pw, salt){
   });
 }
 
-function renderAuthScreen(){
+/* Default account, seeded automatically on first load — no "create account"
+   step. Change DEFAULT_NAME / DEFAULT_HASH to customize (see note near top
+   of this script for how to generate a new hash). */
+var DEFAULT_NAME = "asfini";
+var DEFAULT_HASH = "1dac51bf1c49d6fbee2fdb886df27cc506108a7d004c66a7eae8f9afb2b1fdb4"; /* password: toefl2026 */
+
+function ensureDefaultAccount(){
   var profiles = loadProfiles();
-  var keys = Object.keys(profiles);
-  document.getElementById("authError").textContent = "";
-  if(keys.length === 0){
-    document.getElementById("authTitle").textContent = "Buat Akun";
-    document.getElementById("authSub").textContent = "Tracker ini dikunci khusus untuk 1 akun di perangkat ini. Isi nama & password sekali di awal — selanjutnya kamu tinggal login pakai password yang sama.";
-    document.getElementById("authSetupForm").style.display = "";
-    document.getElementById("authLoginForm").style.display = "none";
-    document.getElementById("setupName").value = "";
-    document.getElementById("setupPassword").value = "";
-    document.getElementById("setupPassword2").value = "";
-  } else {
-    var key = keys[0];
-    document.getElementById("authTitle").textContent = "Selamat Datang Kembali";
-    document.getElementById("authSub").textContent = "Masukkan password untuk melanjutkan progress belajarmu.";
-    document.getElementById("authSetupForm").style.display = "none";
-    document.getElementById("authLoginForm").style.display = "";
-    document.getElementById("loginFixedName").textContent = profiles[key].displayName;
-    document.getElementById("loginPassword").value = "";
+  if(Object.keys(profiles).length === 0){
+    var key = normName(DEFAULT_NAME);
+    profiles = {};
+    profiles[key] = {displayName:DEFAULT_NAME, hash:DEFAULT_HASH, createdAt:new Date().toISOString()};
+    saveProfiles(profiles);
+    var legacy = localStorage.getItem(LEGACY_KEY);
+    if(legacy){ localStorage.setItem(dataKey(key), legacy); }
   }
+  return profiles;
+}
+function renderAuthScreen(){
+  var profiles = ensureDefaultAccount();
+  var key = Object.keys(profiles)[0];
+  document.getElementById("authError").textContent = "";
+  document.getElementById("loginFixedName").textContent = profiles[key].displayName;
+  document.getElementById("loginPassword").value = "";
 }
 function handleLogin(){
-  var profiles = loadProfiles();
-  var keys = Object.keys(profiles);
+  var profiles = ensureDefaultAccount();
+  var key = Object.keys(profiles)[0];
   var err = document.getElementById("authError");
   err.textContent = "";
-  if(keys.length === 0){ renderAuthScreen(); return; }
-  var key = keys[0];
   var pw = document.getElementById("loginPassword").value;
   hashPassword(pw, key).then(function(hash){
     if(hash !== profiles[key].hash){ err.textContent = "Password salah."; return; }
     loginSuccess(key, profiles[key].displayName);
   });
 }
-function handleSetup(){
-  var nameRaw = document.getElementById("setupName").value.trim();
-  var pw = document.getElementById("setupPassword").value;
-  var pw2 = document.getElementById("setupPassword2").value;
-  var err = document.getElementById("authError");
-  err.textContent = "";
-  if(!nameRaw){ err.textContent = "Nama tidak boleh kosong."; return; }
-  if(pw.length < 4){ err.textContent = "Password minimal 4 karakter."; return; }
-  if(pw !== pw2){ err.textContent = "Konfirmasi password tidak cocok."; return; }
-  var existing = loadProfiles();
-  if(Object.keys(existing).length > 0){ renderAuthScreen(); return; }
-  var key = normName(nameRaw);
-  hashPassword(pw, key).then(function(hash){
-    var profiles = {};
-    profiles[key] = {displayName:nameRaw, hash:hash, createdAt:new Date().toISOString()};
-    saveProfiles(profiles);
-    var legacy = localStorage.getItem(LEGACY_KEY);
-    if(legacy){ localStorage.setItem(dataKey(key), legacy); }
-    loginSuccess(key, nameRaw);
-  });
-}
 function handleForgot(){
-  if(!confirm("Ini akan MENGHAPUS akun ini beserta seluruh progress belajar (checklist, vocab, skor TOEFL, error log, weekly review) di perangkat ini secara permanen. Lanjutkan?")) return;
-  if(!confirm("Konfirmasi sekali lagi — hapus akun & semua data sekarang?")) return;
+  if(!confirm("Ini akan MENGHAPUS seluruh progress belajar (checklist, vocab, skor TOEFL, error log, weekly review) di perangkat ini dan mengembalikan login ke akun default. Lanjutkan?")) return;
+  if(!confirm("Konfirmasi sekali lagi — reset semua data sekarang?")) return;
   var profiles = loadProfiles();
   Object.keys(profiles).forEach(function(k){ localStorage.removeItem(dataKey(k)); });
   localStorage.removeItem(PROFILES_KEY);
@@ -935,10 +899,8 @@ function handleLogout(){
   renderAuthScreen();
 }
 function bindAuthEvents(){
-  document.getElementById("setupBtn").addEventListener("click", handleSetup);
   document.getElementById("loginBtn").addEventListener("click", handleLogin);
   document.getElementById("forgotBtn").addEventListener("click", handleForgot);
-  document.getElementById("setupPassword2").addEventListener("keydown", function(e){ if(e.key==="Enter") handleSetup(); });
   document.getElementById("loginPassword").addEventListener("keydown", function(e){ if(e.key==="Enter") handleLogin(); });
 }
 
@@ -1723,6 +1685,25 @@ function init(){
   document.getElementById("authScreen").style.display = "";
   document.getElementById("appShell").style.display = "none";
 }
+
+/* ============================================================
+   CASUAL-DETERRENT LAYER (NOT real security — see chat notes)
+   Blocks right-click and common DevTools shortcuts to discourage
+   casual snooping. Anyone who actually wants to read this file's
+   source (or the GitHub repo it's served from) can still do so —
+   this only stops accidental/casual right-click → Inspect.
+   ============================================================ */
+document.addEventListener("contextmenu", function(e){ e.preventDefault(); });
+document.addEventListener("keydown", function(e){
+  var k = e.key;
+  var blocked =
+    k === "F12" ||
+    ((e.ctrlKey || e.metaKey) && e.shiftKey && (k === "I" || k === "i" || k === "J" || k === "j" || k === "C" || k === "c")) ||
+    ((e.ctrlKey || e.metaKey) && (k === "U" || k === "u"));
+  if(blocked){ e.preventDefault(); }
+});
+console.log("%cStop.", "color:#E8A33D; font-size:32px; font-weight:bold;");
+console.log("%cIni cuma habit tracker pribadi — kalau kamu lihat ini, kamu memang lagi buka DevTools 🙂. Data disimpan di localStorage browser ini.", "color:#4FB4A6; font-size:13px;");
 
 document.addEventListener("DOMContentLoaded", init);
 })();
