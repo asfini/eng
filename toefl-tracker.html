@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TOEFL Progress Tracker — Dynamic Roadmap Tracking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1B33;
+  --ink-soft:#16264A;
+  --ink-line:#28375C;
+  --paper:#F4EFE3;
+  --paper-line:#E2D9C4;
+  --paper-ink:#1C2238;
+  --amber:#E8A33D;
+  --amber-deep:#C77E17;
+  --teal:#4FB4A6;
+  --teal-deep:#2F857A;
+  --danger:#D9695C;
+  --danger-deep:#B54638;
+  --cream:#F4EFE3;
+  --cream-dim:rgba(244,239,227,0.68);
+  --cream-dim2:rgba(244,239,227,0.45);
+  --radius:14px;
+  --maxw:1280px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--cream);
+  font-family:'Inter',sans-serif;
+  font-size:15.5px;
+  line-height:1.6;
+}
+::selection{background:var(--amber); color:var(--ink);}
+a{color:inherit;}
+strong{color:inherit; font-weight:600;}
+button{font-family:'Inter',sans-serif; cursor:pointer;}
+input,select,textarea{font-family:'Inter',sans-serif; color:var(--paper-ink);}
+input,select,textarea,button{font-size:16px;} /* prevents iOS auto-zoom on focus */
+
+/* ---------- Auth screen ---------- */
+.auth-screen{
+  min-height:100vh; min-height:100dvh;
+  display:flex; align-items:center; justify-content:center;
+  padding:32px 18px; background:var(--ink);
+}
+.auth-card{
+  width:100%; max-width:420px;
+  background:var(--ink-soft); border:1px solid var(--ink-line); border-radius:var(--radius);
+  padding:32px 28px;
+}
+.auth-brand{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; color:var(--amber); text-transform:uppercase; margin-bottom:14px;}
+.auth-title{font-family:'Fraunces',serif; font-weight:700; font-size:1.5rem; margin:0 0 10px 0; line-height:1.25;}
+.auth-sub{color:var(--cream-dim); font-size:12.8px; line-height:1.55; margin:0 0 22px 0;}
+.auth-form .form-field{margin-bottom:14px;}
+.auth-form .form-field input{width:100%;}
+.auth-fixed-name{
+  padding:10px 11px; border-radius:8px; border:1px solid var(--ink-line);
+  background:var(--ink); color:var(--cream); font-size:14.5px; font-weight:600;
+}
+.auth-submit{width:100%; padding:12px 18px; font-size:13px; margin-top:4px;}
+.auth-forgot{
+  width:100%; background:none; border:none; color:var(--cream-dim2);
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-decoration:underline;
+  padding:12px 0 0 0; text-align:center;
+}
+.auth-forgot:hover{color:var(--danger);}
+.auth-error{color:var(--danger); font-size:12.5px; margin-top:12px; min-height:1em;}
+@media (max-width:480px){
+  .auth-card{padding:24px 18px;}
+  .auth-title{font-size:1.3rem;}
+}
+
+/* ---------- Top bar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+  padding:14px 24px;
+  background:rgba(15,27,51,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--ink-line);
+}
+.topbar .brand{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  letter-spacing:0.08em;
+  color:var(--amber);
+  text-decoration:none;
+  white-space:nowrap;
+}
+.topbar-right{display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end;}
+.save-indicator{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--cream-dim2);
+  white-space:nowrap;
+}
+.roadmap-link{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  color:var(--teal);
+  text-decoration:none;
+  border:1px solid var(--ink-line);
+  border-radius:100px;
+  padding:6px 14px;
+  white-space:nowrap;
+}
+.roadmap-link:hover{border-color:var(--teal);}
+.profile-badge{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--cream-dim); white-space:nowrap;}
+.logout-btn{
+  background:none; border:1px solid var(--ink-line); color:var(--cream-dim2);
+  border-radius:8px; padding:6px 10px; font-size:13px; line-height:1;
+}
+.logout-btn:hover{border-color:var(--danger); color:var(--danger);}
+.nav-toggle{
+  display:none;
+  background:none;border:1px solid var(--ink-line); color:var(--cream);
+  border-radius:8px; padding:8px 12px; font-size:14px; cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;
+}
+
+/* ---------- Layout ---------- */
+.layout{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  max-width:var(--maxw);
+  margin:0 auto;
+  gap:0;
+  align-items:start;
+}
+.sidebar{
+  position:sticky; top:53px;
+  align-self:start;
+  height:calc(100vh - 53px);
+  overflow-y:auto;
+  padding:24px 12px 40px 20px;
+  border-right:1px solid var(--ink-line);
+}
+.sidebar-title{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px; letter-spacing:0.1em; color:var(--cream-dim2);
+  text-transform:uppercase; margin-bottom:12px;
+}
+.nav-link{
+  display:flex; align-items:center; gap:8px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  color:var(--cream-dim);
+  text-decoration:none;
+  padding:9px 10px;
+  border-radius:8px;
+  margin-bottom:2px;
+  transition:background 0.15s, color 0.15s;
+  line-height:1.35;
+  background:none; border:none; width:100%; text-align:left;
+}
+.nav-link:hover{background:var(--ink-soft); color:var(--cream);}
+.nav-link.active{background:var(--ink-soft); color:var(--amber);}
+
+.main{padding:28px 28px 80px 32px; min-width:0;}
+.panel{display:none;}
+.panel.active{display:block;}
+
+h1,h2,h3{font-family:'Fraunces',serif;}
+.page-title{font-weight:700; font-size:clamp(1.4rem,5vw,2rem); margin:0 0 6px 0;}
+.page-sub{color:var(--cream-dim); margin:0 0 28px 0; max-width:70ch; font-size:14.5px;}
+
+/* ---------- Stat cards ---------- */
+.stat-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:14px; margin-bottom:28px;
+}
+.stat-card{
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  min-width:0;
+}
+.stat-label{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em;
+  color:var(--cream-dim2); text-transform:uppercase; margin-bottom:8px;
+}
+.stat-value{font-family:'Fraunces',serif; font-weight:700; font-size:1.7rem; color:var(--cream); line-height:1.1;}
+.stat-value .unit{font-family:'Inter',sans-serif; font-weight:500; font-size:0.9rem; color:var(--cream-dim);}
+.stat-sub{font-size:12.5px; color:var(--cream-dim2); margin-top:6px;}
+.bar-track{height:8px; border-radius:100px; background:var(--ink-line); overflow:hidden; margin-top:10px;}
+.bar-fill{height:100%; background:linear-gradient(90deg,var(--amber-deep),var(--amber)); border-radius:100px; transition:width 0.3s;}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal-deep),var(--teal));}
+
+/* ---------- Today card ---------- */
+.today-card{
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-left:3px solid var(--teal);
+  border-radius:var(--radius);
+  padding:22px 24px;
+  margin-bottom:28px;
+}
+.today-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.08em; color:var(--teal); text-transform:uppercase; margin-bottom:8px;}
+.today-title{font-family:'Fraunces',serif; font-weight:600; font-size:1.2rem; margin:0 0 10px 0; line-height:1.35;}
+.today-meta{display:flex; flex-wrap:wrap; gap:18px; margin-bottom:14px;}
+.today-meta div{font-size:13.5px; color:var(--cream-dim); min-width:0;}
+.today-meta strong{color:var(--cream); display:block; font-size:12px; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:3px; color:var(--cream-dim2); font-weight:600;}
+.btn{
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+  color:var(--ink); background:var(--amber);
+  border:none; border-radius:100px; padding:9px 18px;
+  font-weight:600; letter-spacing:0.02em;
+}
+.btn:hover{background:var(--amber-deep);}
+.btn.secondary{background:none; color:var(--cream); border:1px solid var(--ink-line);}
+.btn.secondary:hover{border-color:var(--teal); color:var(--teal);}
+.btn.danger{background:var(--danger);}
+.btn.danger:hover{background:var(--danger-deep);}
+.btn:disabled{opacity:0.4; cursor:default;}
+
+/* ---------- Roadmap: month/week/day ---------- */
+details.month-card{
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-radius:var(--radius);
+  margin-bottom:14px;
+  overflow:hidden;
+}
+details.month-card summary{
+  cursor:pointer;
+  list-style:none;
+  padding:16px 20px;
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  flex-wrap:wrap;
+}
+details.month-card summary::-webkit-details-marker{display:none;}
+.month-summary-left{display:flex; align-items:center; gap:12px; min-width:0;}
+.month-summary-left::before{
+  content:"+";
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--amber);
+  font-size:16px;
+  width:14px; text-align:center; flex:0 0 auto;
+}
+details.month-card[open] .month-summary-left::before{content:"–";}
+.month-title{font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--cream);}
+.month-tags{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--cream-dim2); display:flex; gap:6px; flex-wrap:wrap;}
+.badge{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px;
+  background:var(--ink); border:1px solid var(--ink-line);
+  color:var(--teal); padding:4px 10px; border-radius:100px; white-space:nowrap;
+}
+.month-body{padding:6px 20px 20px 20px;}
+.week-card{
+  background:var(--ink);
+  border:1px solid var(--ink-line);
+  border-left:3px solid var(--amber);
+  border-radius:10px;
+  padding:16px 18px;
+  margin-bottom:16px;
+}
+.week-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; flex-wrap:wrap;}
+.week-head h4{margin:0; font-family:'Fraunces',serif; font-weight:600; font-size:1rem; color:var(--cream);}
+.week-meta{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px 18px; margin-bottom:14px;}
+.week-meta-item{font-size:12.8px; color:var(--cream-dim);}
+.week-meta-item strong{display:block; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--cream-dim2); margin-bottom:3px; font-weight:600;}
+
+details.day-card{
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-radius:8px;
+  margin-bottom:8px;
+  overflow:hidden;
+}
+details.day-card[open]{border-color:var(--teal);}
+details.day-card.rest-day{border-style:dashed;}
+details.day-card summary{
+  cursor:pointer; list-style:none;
+  padding:10px 14px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  font-size:13px;
+}
+details.day-card summary::-webkit-details-marker{display:none;}
+.day-summary-left{display:flex; align-items:center; gap:10px; min-width:0;}
+.day-icon{font-size:14px; flex:0 0 auto;}
+.day-name{font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--amber); flex:0 0 auto;}
+.day-focus{color:var(--cream-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;}
+.day-body{padding:4px 16px 14px 16px;}
+.day-secondary{font-size:12px; color:var(--cream-dim2); margin:0 0 10px 0; font-style:italic;}
+.checklist{list-style:none; margin:0; padding:0;}
+.checklist li{display:flex; align-items:flex-start; gap:10px; padding:7px 0; border-bottom:1px solid var(--ink-line);}
+.checklist li:last-child{border-bottom:none;}
+.checklist input[type=checkbox]{margin-top:3px; width:18px; height:18px; accent-color:var(--teal); flex:0 0 auto;}
+.checklist label{font-size:13.2px; color:var(--cream-dim); flex:1; min-width:0;}
+.checklist input:checked + label{color:var(--cream); text-decoration:line-through; text-decoration-color:var(--ink-line);}
+.checklist .mins{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--cream-dim2); flex:0 0 auto;}
+.rest-line{display:flex; align-items:center; gap:10px; font-size:13.2px; color:var(--cream-dim); padding:6px 0;}
+.rest-line input{width:18px; height:18px; accent-color:var(--teal); flex:0 0 auto;}
+
+/* ---------- Tables ---------- */
+.table-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  margin:14px 0 26px 0;
+  border-radius:var(--radius);
+  border:1px solid var(--paper-line);
+}
+table.data-table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:560px;
+  background:var(--paper);
+  color:var(--paper-ink);
+}
+table.data-table th{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px; letter-spacing:0.04em; text-transform:uppercase;
+  background:#EADFC5;
+  color:#4A3E22;
+  text-align:left;
+  padding:10px 12px;
+  border-bottom:1px solid var(--paper-line);
+  white-space:nowrap;
+  position:sticky; top:0;
+}
+table.data-table td{
+  padding:9px 12px;
+  font-size:13.2px;
+  border-bottom:1px solid var(--paper-line);
+  vertical-align:middle;
+}
+table.data-table tbody tr:nth-child(even){background:#EFE9DA;}
+table.data-table tbody tr:hover{background:#E4D9BC;}
+table.data-table td strong{color:var(--amber-deep);}
+table.data-table input[type=number]{
+  width:70px; padding:6px 7px; border-radius:6px; border:1px solid var(--paper-line);
+  background:#fff; font-size:14px;
+}
+.table-scroll-y{max-height:420px; overflow-y:auto;}
+
+/* ---------- Forms ---------- */
+.form-card{
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  margin-bottom:24px;
+}
+.form-row{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:12px;}
+.form-field{display:flex; flex-direction:column; gap:5px; flex:1 1 160px; min-width:0;}
+.form-field label{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--cream-dim2);}
+.form-field input, .form-field select, .form-field textarea{
+  padding:10px 11px; border-radius:8px; border:1px solid var(--paper-line);
+  background:var(--paper); font-size:14.5px; color:var(--paper-ink); width:100%;
+}
+.form-field textarea{resize:vertical; min-height:70px; font-family:'Inter',sans-serif;}
+.toast{
+  font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--teal);
+  opacity:0; transition:opacity 0.25s; margin-left:10px; display:inline-block;
+}
+.toast.show{opacity:1;}
+
+/* ---------- List rows (error log / toefl scores) ---------- */
+.entry-list{display:flex; flex-direction:column; gap:10px;}
+.entry-row{
+  background:var(--ink-soft); border:1px solid var(--ink-line); border-radius:10px;
+  padding:12px 16px; display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
+  flex-wrap:wrap;
+}
+.entry-main{flex:1 1 200px; min-width:0;}
+.entry-date{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--cream-dim2); margin-bottom:4px;}
+.entry-text{font-size:13.8px; color:var(--cream-dim); white-space:pre-wrap; word-break:break-word;}
+.entry-score{font-family:'Fraunces',serif; font-weight:700; color:var(--amber); font-size:1.1rem;}
+.entry-delete{
+  background:none; border:1px solid var(--ink-line); color:var(--cream-dim2);
+  border-radius:8px; padding:6px 10px; font-size:11px; font-family:'IBM Plex Mono',monospace; flex:0 0 auto;
+}
+.entry-delete:hover{border-color:var(--danger); color:var(--danger);}
+.empty-hint{color:var(--cream-dim2); font-size:13.5px; font-style:italic; padding:14px 0;}
+
+/* ---------- Chart ---------- */
+.chart-card{
+  background:var(--ink-soft); border:1px solid var(--ink-line); border-radius:var(--radius);
+  padding:18px 20px; margin-bottom:26px;
+}
+.chart-title{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--cream-dim2); margin-bottom:12px;}
+.chart-svg{width:100%; height:auto; display:block;}
+.chart-legend{display:flex; gap:20px; margin-top:10px; flex-wrap:wrap;}
+.legend-item{display:flex; align-items:center; gap:7px; font-size:12px; color:var(--cream-dim);}
+.legend-swatch{width:16px; height:3px; border-radius:2px; flex:0 0 auto;}
+
+.callout{
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-left:3px solid var(--teal);
+  border-radius:var(--radius);
+  padding:16px 22px;
+  margin:0 0 22px 0;
+}
+.callout p{margin:0; font-size:13.8px; color:var(--cream-dim);}
+
+.settings-block{margin-bottom:24px;}
+.settings-block h3{font-size:1.05rem; margin:0 0 8px 0; color:var(--cream);}
+.settings-block p{color:var(--cream-dim); font-size:13.5px; margin:0 0 12px 0; max-width:60ch;}
+.btn-row{display:flex; gap:10px; flex-wrap:wrap;}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{
+    position:fixed; top:53px; left:0; right:0; bottom:0;
+    height:auto; max-height:calc(100vh - 53px);
+    background:var(--ink); z-index:50;
+    transform:translateY(-110%);
+    transition:transform 0.25s ease;
+    border-right:none;
+    padding:20px 20px 40px 20px;
+  }
+  .sidebar.open{transform:translateY(0);}
+  .nav-toggle{display:inline-block;}
+  .main{padding:20px 18px 60px 18px;}
+  .roadmap-link{display:none;}
+}
+@media (max-width:600px){
+  .day-focus{
+    white-space:normal;
+    display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .today-title{font-size:1.05rem;}
+  .stat-value{font-size:1.4rem;}
+  .form-card, .chart-card, .today-card{padding:16px 16px;}
+}
+@media (max-width:480px){
+  .brand-sub{display:none;}
+  .save-indicator{display:none;}
+  .topbar{padding:10px 14px; gap:8px;}
+  .topbar-right{gap:8px;}
+  .auth-chips{gap:6px;}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-brand">TOEFL TRACKER</div>
+    <h1 class="auth-title" id="authTitle">Buat Akun</h1>
+    <p class="auth-sub" id="authSub">Tracker ini dikunci khusus untuk 1 akun di perangkat ini. Semua data (checklist, vocab, skor, catatan) tersimpan 100% lokal di browser — tidak ada server.</p>
+
+    <form class="auth-form" id="authSetupForm" onsubmit="return false;">
+      <div class="form-field">
+        <label>Nama</label>
+        <input type="text" id="setupName" autocomplete="username" placeholder="Nama kamu">
+      </div>
+      <div class="form-field">
+        <label>Password</label>
+        <input type="password" id="setupPassword" autocomplete="new-password" placeholder="min. 4 karakter">
+      </div>
+      <div class="form-field">
+        <label>Konfirmasi Password</label>
+        <input type="password" id="setupPassword2" autocomplete="new-password" placeholder="ulangi password">
+      </div>
+      <button type="button" class="btn auth-submit" id="setupBtn">Buat Akun &amp; Mulai</button>
+    </form>
+
+    <form class="auth-form" id="authLoginForm" style="display:none" onsubmit="return false;">
+      <div class="form-field">
+        <label>Masuk sebagai</label>
+        <div class="auth-fixed-name" id="loginFixedName">-</div>
+      </div>
+      <div class="form-field">
+        <label>Password</label>
+        <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••">
+      </div>
+      <button type="button" class="btn auth-submit" id="loginBtn">Masuk</button>
+      <button type="button" class="auth-forgot" id="forgotBtn">Lupa password? Hapus akun ini &amp; mulai ulang</button>
+    </form>
+
+    <div class="auth-error" id="authError"></div>
+  </div>
+</div>
+
+<div id="appShell" style="display:none">
+
+  <div class="topbar">
+    <a href="#" class="brand">TOEFL TRACKER<span class="brand-sub"> · DYNAMIC</span></a>
+    <div class="topbar-right">
+      <span class="save-indicator" id="saveIndicator">belum ada perubahan</span>
+      <a href="roadmap-website.html" class="roadmap-link">📖 Roadmap Lengkap</a>
+      <span class="profile-badge" id="profileBadge">👤</span>
+      <button class="logout-btn" id="logoutBtn" title="Keluar">⎋ Keluar</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka navigasi">☰ MENU</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-title">Menu</div>
+      <button class="nav-link active" data-tab="dashboard">🏠 Dashboard</button>
+      <button class="nav-link" data-tab="roadmap">🗺️ Roadmap 12 Bulan</button>
+      <button class="nav-link" data-tab="vocab">🔤 Vocabulary Tracker</button>
+      <button class="nav-link" data-tab="toefl">🎯 Skor TOEFL</button>
+      <button class="nav-link" data-tab="errors">📝 Error Log</button>
+      <button class="nav-link" data-tab="reviews">🧭 Weekly Review</button>
+      <button class="nav-link" data-tab="settings">⚙️ Pengaturan</button>
+    </nav>
+
+    <main class="main">
+
+      <!-- ================= DASHBOARD ================= -->
+      <section class="panel active" id="panel-dashboard">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-sub">Ringkasan progress belajar English + TOEFL ITP 12 bulan. Semua data tersimpan otomatis di browser ini (localStorage) — tidak perlu server atau koneksi internet.</p>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">Progress Belajar</div>
+            <div class="stat-value" id="statProgressValue">0<span class="unit"> / 288 hari</span></div>
+            <div class="bar-track"><div class="bar-fill" id="statProgressBar" style="width:0%"></div></div>
+            <div class="stat-sub" id="statProgressSub">0% selesai</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Streak Harian</div>
+            <div class="stat-value" id="statStreak">0<span class="unit"> hari 🔥</span></div>
+            <div class="stat-sub" id="statStreakBest">Rekor terbaik: 0 hari</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Vocabulary Tercatat</div>
+            <div class="stat-value" id="statVocab">0<span class="unit"> kata</span></div>
+            <div class="bar-track"><div class="bar-fill teal" id="statVocabBar" style="width:0%"></div></div>
+            <div class="stat-sub" id="statVocabSub">Target: 0 kata</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Skor TOEFL Terakhir</div>
+            <div class="stat-value" id="statToefl">—</div>
+            <div class="stat-sub" id="statToeflSub">Belum ada skor tercatat</div>
+          </div>
+        </div>
+
+        <div class="today-card" id="todayCard"></div>
+
+        <div class="chart-card">
+          <div class="chart-title">Vocabulary — Kumulatif Aktual vs Target (48 minggu)</div>
+          <div id="dashVocabChart"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Skor TOEFL — Aktual vs Target per Bulan</div>
+          <div id="dashToeflChart"></div>
+        </div>
+      </section>
+
+      <!-- ================= ROADMAP ================= -->
+      <section class="panel" id="panel-roadmap">
+        <h1 class="page-title">Roadmap 12 Bulan</h1>
+        <p class="page-sub">Struktur: 12 bulan → 4 minggu → 6 hari belajar + 1 hari rest. Centang tiap item checklist harian; progress akan otomatis tersinkron ke Dashboard.</p>
+        <div id="roadmapContainer"></div>
+      </section>
+
+      <!-- ================= VOCAB ================= -->
+      <section class="panel" id="panel-vocab">
+        <h1 class="page-title">Vocabulary Tracker</h1>
+        <p class="page-sub">Catat jumlah kata baru aktual yang kamu pelajari tiap minggu (masuk SRS), lalu bandingkan dengan target progresif dari kurikulum (Bagian 3 roadmap).</p>
+        <div class="chart-card">
+          <div class="chart-title">Kumulatif Aktual vs Target</div>
+          <div id="vocabChart"></div>
+        </div>
+        <div class="table-wrap table-scroll-y">
+          <table class="data-table" id="vocabTable"></table>
+        </div>
+      </section>
+
+      <!-- ================= TOEFL ================= -->
+      <section class="panel" id="panel-toefl">
+        <h1 class="page-title">Skor TOEFL Tracker</h1>
+        <p class="page-sub">Catat hasil tiap prediction test, mock test, atau simulasi TOEFL ITP untuk melihat progresmu dibanding target milestone tiap bulan.</p>
+        <div class="form-card">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Tanggal</label>
+              <input type="date" id="toeflDate">
+            </div>
+            <div class="form-field">
+              <label>Bulan ke-</label>
+              <select id="toeflMonth"></select>
+            </div>
+            <div class="form-field" style="flex:2 1 220px;">
+              <label>Nama Tes</label>
+              <input type="text" id="toeflLabel" placeholder="mis. Mock Test #1">
+            </div>
+            <div class="form-field" style="flex:0 1 120px;">
+              <label>Skor</label>
+              <input type="number" id="toeflScore" min="310" max="677" placeholder="500">
+            </div>
+          </div>
+          <button class="btn" id="toeflAddBtn">+ Tambah Skor</button>
+          <span class="toast" id="toeflToast">Tersimpan ✓</span>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Aktual vs Target per Bulan</div>
+          <div id="toeflChart"></div>
+        </div>
+        <div class="entry-list" id="toeflList"></div>
+      </section>
+
+      <!-- ================= ERRORS ================= -->
+      <section class="panel" id="panel-errors">
+        <h1 class="page-title">Error Log</h1>
+        <p class="page-sub">Sesuai prinsip evidence-based di roadmap: catat 1 kesalahan besar tiap hari. Ini jadi bahan review mingguan &amp; bulanan.</p>
+        <div class="form-card">
+          <div class="form-field">
+            <label>Kesalahan hari ini</label>
+            <textarea id="errorText" placeholder="mis. Salah pakai 'since' vs 'for' saat cerita pengalaman kerja..."></textarea>
+          </div>
+          <div style="margin-top:10px;">
+            <button class="btn" id="errorAddBtn">+ Catat Kesalahan</button>
+            <span class="toast" id="errorToast">Tersimpan ✓</span>
+          </div>
+        </div>
+        <div class="entry-list" id="errorList"></div>
+      </section>
+
+      <!-- ================= REVIEWS ================= -->
+      <section class="panel" id="panel-reviews">
+        <h1 class="page-title">Weekly Review</h1>
+        <p class="page-sub">Tiap akhir minggu (Day 6 malam): tulis skill paling improve, skill paling lemah, dan rencana perbaikan minggu depan — 1 paragraf singkat berbahasa Inggris.</p>
+        <div class="form-card">
+          <div class="form-row">
+            <div class="form-field" style="flex:0 1 140px;">
+              <label>Bulan</label>
+              <select id="reviewMonth"></select>
+            </div>
+            <div class="form-field" style="flex:0 1 140px;">
+              <label>Minggu</label>
+              <select id="reviewWeek">
+                <option value="1">Minggu 1</option>
+                <option value="2">Minggu 2</option>
+                <option value="3">Minggu 3</option>
+                <option value="4">Minggu 4</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-field" style="margin-bottom:12px;">
+            <label>Skill paling improve</label>
+            <textarea id="reviewImproved" placeholder="This week my listening improved because..."></textarea>
+          </div>
+          <div class="form-field" style="margin-bottom:12px;">
+            <label>Skill paling lemah</label>
+            <textarea id="reviewWeak" placeholder="My weakest skill was speaking fluency because..."></textarea>
+          </div>
+          <div class="form-field" style="margin-bottom:4px;">
+            <label>Rencana minggu depan</label>
+            <textarea id="reviewPlan" placeholder="Next week I will focus on..."></textarea>
+          </div>
+          <div style="margin-top:10px;">
+            <button class="btn" id="reviewSaveBtn">💾 Simpan Review</button>
+            <span class="toast" id="reviewToast">Tersimpan ✓</span>
+          </div>
+        </div>
+        <div class="entry-list" id="reviewList"></div>
+      </section>
+
+      <!-- ================= SETTINGS ================= -->
+      <section class="panel" id="panel-settings">
+        <h1 class="page-title">Pengaturan</h1>
+        <p class="page-sub">Data akun kamu (<span id="settingsProfileName">-</span>) tersimpan lokal di browser ini, terikat ke file ini. Backup rutin disarankan.</p>
+
+        <div class="settings-block">
+          <h3>💾 Export Backup</h3>
+          <p>Unduh seluruh progress (checklist, vocab, skor TOEFL, error log, weekly review) sebagai file JSON.</p>
+          <button class="btn secondary" id="exportBtn">⬇ Export JSON</button>
+        </div>
+
+        <div class="settings-block">
+          <h3>📥 Import Backup</h3>
+          <p>Muat kembali file JSON backup ke akun yang sedang login. Ini akan menimpa seluruh data akun ini.</p>
+          <input type="file" id="importFile" accept="application/json">
+        </div>
+
+        <div class="settings-block">
+          <h3>🗑️ Reset Progress</h3>
+          <p>Menghapus semua checklist, catatan vocab, skor TOEFL, error log, dan weekly review milik akun ini. Tindakan ini tidak bisa dibatalkan — export backup dulu jika perlu.</p>
+          <button class="btn danger" id="resetBtn">Reset Semua Progress</button>
+        </div>
+
+        <div class="callout">
+          <p><strong>Catatan:</strong> file ini murni berjalan di browser kamu (tidak ada server). Password akun hanya memisahkan data antar pengguna di perangkat ini, bukan enkripsi tingkat keamanan tinggi. Kalau kamu buka file ini dari browser/komputer berbeda, atau membersihkan data situs (clear site data), progress tidak ikut pindah kecuali export &amp; import manual.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   DATA — kurikulum 12 bulan (ringkasan dari roadmap-website.html)
+   ============================================================ */
+var PHASES = ["Foundation Rebuild","Foundation+","Structure Building","Structure Building+","Complexity","Complexity+","Academic Push","Academic Push+","Fluency Integration","Fluency Integration+","Peak Performance","Exam Ready"];
+var TOEFL_TARGETS = [450,470,490,500,510,520,525,535,545,550,555,560];
+var VOCAB_CUM = [600,1320,2100,3000,3900,4800,5700,6600,7320,7920,8400,8760];
+var VOCAB_WEEK = [100,120,130,150,150,150,150,150,120,100,80,60];
+
+var WEEKS_DATA = [
+/* Month 1 */
+[
+  {g:"Diagnostic + Tenses Review (Simple, Continuous, Perfect, Perfect Continuous)", v:"Daily Life: rutinitas, waktu, pengalaman, rencana, emosi", l:"VOA Learning English (15–20 menit)", r:"Artikel VOA + graded reader pendek", ms:"100 kata baru masuk SRS, cerita rutinitas harian 2 menit tanpa banyak jeda"},
+  {g:"Parts of Speech & Sentence Pattern (SV/SVO/SVC/SVOO/SVOC) + Adj/Adv, Preposition, Conjunction", v:"Keluarga, rumah, makanan, deskripsi, arah/lokasi", l:"VOA / BBC 6 Minute English", r:"Artikel pendek + short story", ms:"Kumulatif 200 kata, paham struktur kalimat dasar-menengah"},
+  {g:"Question Forms & Negation, Countable/Uncountable, Intro format TOEFL", v:"Pekerjaan, hobi + TOEFL Vocab batch 1", l:"VOA/BBC + contoh audio TOEFL", r:"Short story + contoh passage TOEFL", ms:"Kumulatif 300 kata, familiar dengan format TOEFL"},
+  {g:"Review & Konsolidasi Week 1–3 + latihan TOEFL Structure/Listening/Reading (timed)", v:"Teknologi dasar + TOEFL Vocab batch 2", l:"Full listening set / audio TOEFL", r:"Full reading set / passage TOEFL", ms:"MONTHLY ASSESSMENT — mock test ≈450, 600 kata aktif, cerita rutinitas 3 menit"}
+],
+/* Month 2 */
+[
+  {g:"Passive Voice (present & past)", v:"Education", l:"VOA → BBC 6 Min", r:"News pendek", ms:"Bisa ubah kalimat aktif ↔ pasif"},
+  {g:"Passive Voice (perfect & modal)", v:"Education lanjutan", l:"BBC 6 Min", r:"Short story", ms:"Paham struktur pasif kompleks"},
+  {g:"Reported Speech (statement)", v:"Travel", l:"BBC / TED intro", r:"Blog travel", ms:"Bisa retelling percakapan"},
+  {g:"Reported Speech (question & command) + Review", v:"Travel lanjutan", l:"Mixed review", r:"Mixed review", ms:"Progress check informal"}
+],
+/* Month 3 */
+[
+  {g:"Relative Clause (defining)", v:"Business Basic", l:"TED Talk (subtitle EN)", r:"Blog bisnis", ms:"Bisa gabung 2 kalimat pakai relative clause"},
+  {g:"Relative Clause (non-defining) + omission", v:"Business lanjutan", l:"TED Talk", r:"Blog bisnis", ms:"—"},
+  {g:"Adjective Clause reduction (intro)", v:"Technology", l:"ESL Podcast", r:"Artikel tech ringan", ms:"Mulai kenal reduced clause"},
+  {g:"Review + TOEFL Prediction Test #1", v:"Technology lanjutan", l:"Mixed", r:"Mixed", ms:"Prediction Test #1"}
+],
+/* Month 4 */
+[
+  {g:"Noun Clause (that-clause, wh-clause)", v:"Programming Basic 1 (variable, function)", l:"TED Talk / tech YouTube", r:"MDN docs intro", ms:"Baca 1 baris dokumentasi paham struktur"},
+  {g:"Noun Clause (if/whether)", v:"Programming Basic 1 lanjutan", l:"Fireship / freeCodeCamp", r:"Docs lanjutan", ms:"—"},
+  {g:"Adverb Clause (time, reason)", v:"TOEFL Vocab Batch 1", l:"Mixed", r:"Docs", ms:"—"},
+  {g:"Adverb Clause (contrast, purpose) + MOCK TEST #1 (full)", v:"TOEFL Vocab Batch 1 lanjutan", l:"—", r:"—", ms:"Full Mock Test #1, target skor 500"}
+],
+/* Month 5 */
+[
+  {g:"Conditional Type 0 & 1", v:"Programming Basic 2 (API, database)", l:"Fireship, Syntax.fm", r:"Docs API sederhana", ms:"—"},
+  {g:"Conditional Type 2 & 3 + Mixed", v:"Programming Basic 2 lanjutan", l:"Podcast tech", r:"Docs lanjutan", ms:"Bisa jelaskan 'jika X maka Y' teknis"},
+  {g:"Modal Verbs (deduction, advice)", v:"Science", l:"TED-Ed science", r:"Artikel sains ringan", ms:"—"},
+  {g:"Modal Verbs (past modals) + Error Analysis mulai", v:"Science lanjutan", l:"Mixed", r:"Mixed", ms:"Error Analysis Log dimulai"}
+],
+/* Month 6 */
+[
+  {g:"Gerund vs Infinitive (verb patterns)", v:"Economy", l:"NPR / CNN 10", r:"Artikel ekonomi", ms:"—"},
+  {g:"Gerund/Infinitive lanjutan (preposition + gerund)", v:"Economy lanjutan", l:"CNN 10", r:"Artikel ekonomi", ms:"—"},
+  {g:"Reduced Clause (participle phrase)", v:"Health", l:"Documentary intro", r:"Scientific article ringan", ms:"Baca 1 dokumen sains tanpa translate"},
+  {g:"Review total + QUARTERLY TOEFL SIMULATION #1 (Full)", v:"Health lanjutan", l:"—", r:"—", ms:"Simulasi Kuarter 1, target skor 520"}
+],
+/* Month 7 */
+[
+  {g:"Inversion (negative adverbial: Never have I...)", v:"AWL Batch 1 (sublist 1–2)", l:"Documentary", r:"Research abstract", ms:"—"},
+  {g:"Inversion (conditional without if)", v:"AWL Batch 1 (sublist 3–4)", l:"Documentary", r:"Research abstract", ms:"—"},
+  {g:"Parallel Structure & Comparative lanjutan", v:"Politics + AWL sublist 5", l:"Native podcast", r:"Artikel politik ringan", ms:"—"},
+  {g:"Review + presentasi teknis 5 menit (rekam video)", v:"Politics lanjutan", l:"Mixed", r:"Mixed", ms:"Milestone: presentasi 5 menit"}
+],
+/* Month 8 */
+[
+  {g:"Compound-Complex Sentence", v:"AWL Batch 2 (sublist 6–7)", l:"Series (tanpa subtitle, easy)", r:"Novel mulai", ms:"—"},
+  {g:"Cleft Sentence & Emphasis", v:"AWL Batch 2 (sublist 8–9)", l:"Series", r:"Novel", ms:"—"},
+  {g:"Academic Grammar (nominalization, hedging)", v:"Idioms & Collocation set 1", l:"Native conversation podcast", r:"Academic journal intro", ms:"—"},
+  {g:"Review + MOCK TEST #2 (full)", v:"AWL sublist 10", l:"—", r:"—", ms:"Full Mock Test #2, target skor 535"}
+],
+/* Month 9 */
+[
+  {g:"Interleaved review (semua clause + reduced)", v:"Phrasal Verb set 1", l:"Movie (tanpa subtitle)", r:"Novel + Journal", ms:"—"},
+  {g:"Interleaved review (passive + reported + conditional)", v:"Phrasal Verb set 2", l:"Movie", r:"Journal", ms:"—"},
+  {g:"Speed grammar drill (timed)", v:"Synonym/Antonym set 1", l:"Real meeting recording", r:"Journal lanjutan", ms:"Ikut 1 mock meeting internasional"},
+  {g:"Full grammar review + weak-point drilling", v:"Synonym/Antonym set 2", l:"Mixed", r:"Mixed", ms:"—"}
+],
+/* Month 10 */
+[
+  {g:"Timed practice — Listening section", v:"TOEFL High-Frequency Vocab", l:"Full-length listening sets", r:"Full-length reading sets", ms:"—"},
+  {g:"Timed practice — Structure section", v:"TOEFL High-Frequency Vocab", l:"Full-length listening sets", r:"Full-length reading sets", ms:"—"},
+  {g:"Timed practice — Reading section", v:"TOEFL High-Frequency Vocab", l:"Full-length listening sets", r:"Full-length reading sets", ms:"—"},
+  {g:"QUARTERLY TOEFL SIMULATION #2 (Full, timed)", v:"Review", l:"—", r:"—", ms:"Simulasi Kuarter 2, target skor 550"}
+],
+/* Month 11 */
+[
+  {g:"Mock test mingguan + error drilling harian", v:"Advanced Tech/Academic (cloud, DevOps)", l:"Native podcast/meeting", r:"Academic journal full paper", ms:"—"},
+  {g:"Mock test mingguan + error drilling harian", v:"Advanced Tech/Academic (research terms)", l:"Native podcast/meeting", r:"Academic journal full paper", ms:"—"},
+  {g:"Mock test mingguan + error drilling harian", v:"Advanced Tech/Academic — review", l:"Native podcast/meeting", r:"Academic journal full paper", ms:"Interview kerja simulasi (rekam + evaluasi AI)"},
+  {g:"Full review seluruh grammar + vocab gap-filling", v:"Review", l:"Mixed", r:"Mixed", ms:"—"}
+],
+/* Month 12 */
+[
+  {g:"Full mock test (kondisi ujian asli) 2x", v:"Review total", l:"Mixed", r:"Mixed", ms:"—"},
+  {g:"Fine-tuning kelemahan spesifik", v:"Review total", l:"Mixed", r:"Mixed", ms:"—"},
+  {g:"Full mock test 2x + light review", v:"Review total", l:"Mixed", r:"Mixed", ms:"—"},
+  {g:"Tapering (kurangi intensitas 2 hari sebelum ujian) + REAL TOEFL ITP TEST", v:"—", l:"—", r:"—", ms:"🎯 TARGET: 560+"}
+]
+];
+
+var DAY_TEMPLATE = [
+  {primary:"Grammar (konsep baru) + Vocabulary baru", secondary:"Listening ringan", speaking:"Shadowing"},
+  {primary:"Grammar (latihan soal) + Vocabulary review", secondary:"Reading", speaking:"Retelling isi reading"},
+  {primary:"Listening (tahap sesuai bulan)", secondary:"Vocabulary dalam konteks", speaking:"Picture Description / Storytelling"},
+  {primary:"Reading (tahap sesuai bulan)", secondary:"Grammar aplikasi (nulis 10 kalimat)", speaking:"Opinion Speaking"},
+  {primary:"Writing (jenis sesuai bulan)", secondary:"Pronunciation drill", speaking:"Role Play / Discussion"},
+  {primary:"TOEFL Practice Session / Kuis campuran", secondary:"Error Analysis", speaking:"Presentation / Debate (bergantian)"}
+];
+
+var ITEM_KEYS = ["srs","gram","lis","read","speak","write","vocab","err"];
+
+function itemsForDay(m,w,d){
+  var wk = WEEKS_DATA[m-1][w-1];
+  var tpl = DAY_TEMPLATE[d-1];
+  return [
+    {key:"srs", label:"Review flashcard SRS", mins:"20 menit"},
+    {key:"gram", label:"Grammar — " + wk.g, mins:"25 menit"},
+    {key:"lis", label:"Listening — " + wk.l, mins:"25 menit"},
+    {key:"read", label:"Reading — " + wk.r, mins:"30 menit"},
+    {key:"speak", label:"Speaking — " + tpl.speaking + " (rekam)", mins:"25 menit"},
+    {key:"write", label:"Writing sesuai tahap bulan ini", mins:"20 menit"},
+    {key:"vocab", label:"Input 10 kata baru — " + wk.v, mins:"15 menit"},
+    {key:"err", label:"Catat 1 kesalahan besar ke Error Log", mins:""}
+  ];
+}
+
+/* ============================================================
+   AUTH / PROFILES  (local-only — passwords just separate users
+   on this device, this is NOT server-grade security)
+   ============================================================ */
+var PROFILES_KEY = "toefl_tracker_profiles_v1";
+var SESSION_KEY = "toefl_tracker_session_v1";
+var LEGACY_KEY = "toefl_tracker_v1"; // pre-login single-user data
+var currentProfileKey = null;
+var currentProfileName = null;
+
+function dataKey(key){ return "toefl_tracker_data_v1__" + key; }
+function normName(name){ return name.trim().toLowerCase(); }
+function loadProfiles(){
+  try{ return JSON.parse(localStorage.getItem(PROFILES_KEY)) || {}; }catch(e){ return {}; }
+}
+function saveProfiles(p){ localStorage.setItem(PROFILES_KEY, JSON.stringify(p)); }
+function hashPassword(pw, salt){
+  var enc = new TextEncoder().encode(salt + "::" + pw);
+  return crypto.subtle.digest("SHA-256", enc).then(function(buf){
+    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join("");
+  });
+}
+
+function renderAuthScreen(){
+  var profiles = loadProfiles();
+  var keys = Object.keys(profiles);
+  document.getElementById("authError").textContent = "";
+  if(keys.length === 0){
+    document.getElementById("authTitle").textContent = "Buat Akun";
+    document.getElementById("authSub").textContent = "Tracker ini dikunci khusus untuk 1 akun di perangkat ini. Isi nama & password sekali di awal — selanjutnya kamu tinggal login pakai password yang sama.";
+    document.getElementById("authSetupForm").style.display = "";
+    document.getElementById("authLoginForm").style.display = "none";
+    document.getElementById("setupName").value = "";
+    document.getElementById("setupPassword").value = "";
+    document.getElementById("setupPassword2").value = "";
+  } else {
+    var key = keys[0];
+    document.getElementById("authTitle").textContent = "Selamat Datang Kembali";
+    document.getElementById("authSub").textContent = "Masukkan password untuk melanjutkan progress belajarmu.";
+    document.getElementById("authSetupForm").style.display = "none";
+    document.getElementById("authLoginForm").style.display = "";
+    document.getElementById("loginFixedName").textContent = profiles[key].displayName;
+    document.getElementById("loginPassword").value = "";
+  }
+}
+function handleLogin(){
+  var profiles = loadProfiles();
+  var keys = Object.keys(profiles);
+  var err = document.getElementById("authError");
+  err.textContent = "";
+  if(keys.length === 0){ renderAuthScreen(); return; }
+  var key = keys[0];
+  var pw = document.getElementById("loginPassword").value;
+  hashPassword(pw, key).then(function(hash){
+    if(hash !== profiles[key].hash){ err.textContent = "Password salah."; return; }
+    loginSuccess(key, profiles[key].displayName);
+  });
+}
+function handleSetup(){
+  var nameRaw = document.getElementById("setupName").value.trim();
+  var pw = document.getElementById("setupPassword").value;
+  var pw2 = document.getElementById("setupPassword2").value;
+  var err = document.getElementById("authError");
+  err.textContent = "";
+  if(!nameRaw){ err.textContent = "Nama tidak boleh kosong."; return; }
+  if(pw.length < 4){ err.textContent = "Password minimal 4 karakter."; return; }
+  if(pw !== pw2){ err.textContent = "Konfirmasi password tidak cocok."; return; }
+  var existing = loadProfiles();
+  if(Object.keys(existing).length > 0){ renderAuthScreen(); return; }
+  var key = normName(nameRaw);
+  hashPassword(pw, key).then(function(hash){
+    var profiles = {};
+    profiles[key] = {displayName:nameRaw, hash:hash, createdAt:new Date().toISOString()};
+    saveProfiles(profiles);
+    var legacy = localStorage.getItem(LEGACY_KEY);
+    if(legacy){ localStorage.setItem(dataKey(key), legacy); }
+    loginSuccess(key, nameRaw);
+  });
+}
+function handleForgot(){
+  if(!confirm("Ini akan MENGHAPUS akun ini beserta seluruh progress belajar (checklist, vocab, skor TOEFL, error log, weekly review) di perangkat ini secara permanen. Lanjutkan?")) return;
+  if(!confirm("Konfirmasi sekali lagi — hapus akun & semua data sekarang?")) return;
+  var profiles = loadProfiles();
+  Object.keys(profiles).forEach(function(k){ localStorage.removeItem(dataKey(k)); });
+  localStorage.removeItem(PROFILES_KEY);
+  localStorage.removeItem(SESSION_KEY);
+  renderAuthScreen();
+}
+function loginSuccess(key, displayName){
+  currentProfileKey = key;
+  currentProfileName = displayName;
+  localStorage.setItem(SESSION_KEY, key);
+  state = loadState(key);
+  document.getElementById("authScreen").style.display = "none";
+  document.getElementById("appShell").style.display = "";
+  document.getElementById("profileBadge").textContent = "👤 " + displayName;
+  var sp = document.getElementById("settingsProfileName");
+  if(sp) sp.textContent = displayName;
+  bindAllEventsOnce();
+  renderAppData();
+}
+function handleLogout(){
+  localStorage.removeItem(SESSION_KEY);
+  currentProfileKey = null;
+  currentProfileName = null;
+  state = null;
+  document.getElementById("appShell").style.display = "none";
+  document.getElementById("authScreen").style.display = "";
+  renderAuthScreen();
+}
+function bindAuthEvents(){
+  document.getElementById("setupBtn").addEventListener("click", handleSetup);
+  document.getElementById("loginBtn").addEventListener("click", handleLogin);
+  document.getElementById("forgotBtn").addEventListener("click", handleForgot);
+  document.getElementById("setupPassword2").addEventListener("keydown", function(e){ if(e.key==="Enter") handleSetup(); });
+  document.getElementById("loginPassword").addEventListener("keydown", function(e){ if(e.key==="Enter") handleLogin(); });
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+var state = null;
+
+function defaultState(){
+  return { checks:{}, activity:[], vocab:{}, toeflScores:[], errors:[], reviews:{} };
+}
+function loadState(key){
+  try{
+    var raw = localStorage.getItem(dataKey(key));
+    if(!raw) return defaultState();
+    var parsed = JSON.parse(raw);
+    var d = defaultState();
+    for(var k in d){ if(parsed[k] === undefined) parsed[k] = d[k]; }
+    return parsed;
+  }catch(e){ return defaultState(); }
+}
+function saveState(){
+  if(!currentProfileKey) return;
+  localStorage.setItem(dataKey(currentProfileKey), JSON.stringify(state));
+  var ind = document.getElementById("saveIndicator");
+  var now = new Date();
+  ind.textContent = "tersimpan " + now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+function todayStr(){
+  var d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,'0') + "-" + String(d.getDate()).padStart(2,'0');
+}
+function recordActivity(){
+  var t = todayStr();
+  if(state.activity.indexOf(t) === -1){
+    state.activity.push(t);
+    state.activity.sort();
+  }
+}
+
+/* ============================================================
+   PROGRESS COMPUTATION
+   ============================================================ */
+function dayKey(m,w,d,key){ return "d" + m + "_" + w + "_" + d + "_" + key; }
+function restKey(m,w){ return "rest_" + m + "_" + w; }
+
+function isStudyDayComplete(m,w,d){
+  for(var i=0;i<ITEM_KEYS.length;i++){
+    if(!state.checks[dayKey(m,w,d,ITEM_KEYS[i])]) return false;
+  }
+  return true;
+}
+function isRestDayComplete(m,w){
+  return !!state.checks[restKey(m,w)];
+}
+function weekCompleteCount(m,w){
+  var c = 0;
+  for(var d=1;d<=6;d++){ if(isStudyDayComplete(m,w,d)) c++; }
+  return c;
+}
+function monthCompleteCount(m){
+  var c = 0;
+  for(var w=1;w<=4;w++){ c += weekCompleteCount(m,w); }
+  return c;
+}
+function overallStudyStats(){
+  var total = 0;
+  for(var m=1;m<=12;m++){ total += monthCompleteCount(m); }
+  return {done: total, total: 288, pct: Math.round(total/288*100)};
+}
+function nextIncompleteDay(){
+  for(var m=1;m<=12;m++){
+    for(var w=1;w<=4;w++){
+      for(var d=1;d<=6;d++){
+        if(!isStudyDayComplete(m,w,d)) return {m:m,w:w,d:d};
+      }
+    }
+  }
+  return null;
+}
+function currentStreak(){
+  if(state.activity.length === 0) return 0;
+  var set = {};
+  state.activity.forEach(function(a){ set[a]=true; });
+  var cursor = new Date();
+  var todayKey = todayStr();
+  if(!set[todayKey]){
+    cursor.setDate(cursor.getDate()-1);
+  }
+  var streak = 0;
+  while(true){
+    var k = cursor.getFullYear() + "-" + String(cursor.getMonth()+1).padStart(2,'0') + "-" + String(cursor.getDate()).padStart(2,'0');
+    if(set[k]){ streak++; cursor.setDate(cursor.getDate()-1); } else break;
+  }
+  return streak;
+}
+function bestStreak(){
+  if(state.activity.length === 0) return 0;
+  var dates = state.activity.slice().sort();
+  var best = 1, cur = 1;
+  for(var i=1;i<dates.length;i++){
+    var prev = new Date(dates[i-1]);
+    var curr = new Date(dates[i]);
+    var diff = Math.round((curr-prev)/86400000);
+    if(diff === 1){ cur++; if(cur>best) best=cur; }
+    else if(diff > 1){ cur = 1; }
+  }
+  return best;
+}
+
+/* Vocab helpers */
+function vocabKey(m,w){ return m+"_"+w; }
+function vocabActual(m,w){ return Number(state.vocab[vocabKey(m,w)] || 0); }
+function vocabWeeklyList(){
+  var list = [];
+  for(var m=1;m<=12;m++){
+    for(var w=1;w<=4;w++){
+      list.push({m:m, w:w, target: VOCAB_WEEK[m-1], actual: vocabActual(m,w)});
+    }
+  }
+  return list;
+}
+function vocabCumulative(){
+  var list = vocabWeeklyList();
+  var cumT=0, cumA=0;
+  var out = [];
+  list.forEach(function(item){
+    cumT += item.target;
+    cumA += item.actual;
+    out.push({m:item.m,w:item.w,target:item.target,actual:item.actual,cumTarget:cumT,cumActual:cumA});
+  });
+  return out;
+}
+function totalVocabActual(){
+  var t = 0;
+  for(var k in state.vocab){ t += Number(state.vocab[k]||0); }
+  return t;
+}
+function vocabTargetToDate(){
+  var pos = nextIncompleteDay();
+  var m = pos ? pos.m : 12;
+  var w = pos ? pos.w : 4;
+  var idx = (m-1)*4 + (w-1);
+  var cum = vocabCumulative();
+  return cum[idx] ? cum[idx].cumTarget : VOCAB_CUM[11];
+}
+
+/* TOEFL helpers */
+function lastToeflScore(){
+  if(state.toeflScores.length === 0) return null;
+  var sorted = state.toeflScores.slice().sort(function(a,b){ return (a.date||"").localeCompare(b.date||""); });
+  return sorted[sorted.length-1];
+}
+function bestScoreForMonth(m){
+  var scores = state.toeflScores.filter(function(s){ return Number(s.month) === m; });
+  if(scores.length===0) return null;
+  return Math.max.apply(null, scores.map(function(s){ return Number(s.score); }));
+}
+
+/* ============================================================
+   RESPONSIVE HELPERS
+   ============================================================ */
+function chartRenderWidth(){
+  var main = document.querySelector('.main');
+  var w = main ? main.clientWidth : 720;
+  return Math.max(260, Math.min(900, w - 8));
+}
+function debounce(fn, wait){
+  var t;
+  return function(){
+    var args = arguments, ctx = this;
+    clearTimeout(t);
+    t = setTimeout(function(){ fn.apply(ctx, args); }, wait);
+  };
+}
+function rerenderCharts(){
+  if(!currentProfileKey) return;
+  renderVocabChart("dashVocabChart");
+  renderToeflChart("dashToeflChart");
+  renderVocabChart("vocabChart");
+  renderToeflChart("toeflChart");
+}
+
+/* ============================================================
+   SVG CHART BUILDER
+   ============================================================ */
+function svgLineChart(opts){
+  var w = opts.width || 720, h = opts.height || 220;
+  var pad = {t:16, r:14, b:26, l:44};
+  var n = opts.xLabels.length;
+  var plotW = w - pad.l - pad.r;
+  var plotH = h - pad.t - pad.b;
+  var yMax = opts.yMax;
+  function sx(i){ return pad.l + (n<=1?0:(i/(n-1))*plotW); }
+  function sy(v){ return pad.t + plotH - (v/yMax)*plotH; }
+
+  var svg = '<svg class="chart-svg" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+(opts.ariaLabel||'chart')+'">';
+
+  // gridlines
+  var ticks = opts.yTicks || 4;
+  for(var t=0;t<=ticks;t++){
+    var val = Math.round(yMax * t / ticks);
+    var y = sy(val);
+    svg += '<line x1="'+pad.l+'" y1="'+y+'" x2="'+(w-pad.r)+'" y2="'+y+'" stroke="#28375C" stroke-width="1"/>';
+    svg += '<text x="'+(pad.l-8)+'" y="'+(y+3)+'" text-anchor="end" font-size="9.5" font-family="IBM Plex Mono, monospace" fill="rgba(244,239,227,0.5)">'+val.toLocaleString('id-ID')+'</text>';
+  }
+  // x labels (sparse)
+  var everyN = opts.xTickEvery || Math.ceil(n/10);
+  for(var i=0;i<n;i+=everyN){
+    svg += '<text x="'+sx(i)+'" y="'+(h-6)+'" text-anchor="middle" font-size="9.5" font-family="IBM Plex Mono, monospace" fill="rgba(244,239,227,0.5)">'+opts.xLabels[i]+'</text>';
+  }
+
+  // target line (dashed amber)
+  if(opts.target){
+    var pT = "";
+    opts.target.forEach(function(v,i){ pT += (i===0?"M":"L") + sx(i) + " " + sy(Math.min(v,yMax)) + " "; });
+    svg += '<path d="'+pT+'" fill="none" stroke="#E8A33D" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"/>';
+  }
+  // actual line / markers
+  if(opts.actualLine){
+    var pA = "";
+    opts.actual.forEach(function(v,i){ pA += (i===0?"M":"L") + sx(i) + " " + sy(Math.min(v,yMax)) + " "; });
+    svg += '<path d="'+pA+'" fill="none" stroke="#4FB4A6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+  if(opts.actualDots){
+    opts.actual.forEach(function(v,i){
+      if(v===null || v===undefined) return;
+      svg += '<circle cx="'+sx(i)+'" cy="'+sy(Math.min(v,yMax))+'" r="4.5" fill="#4FB4A6" stroke="#0F1B33" stroke-width="1.5"><title>'+(opts.xLabels[i])+': '+v+'</title></circle>';
+    });
+  } else if(opts.actualLine && opts.actual.length){
+    var lastIdx = opts.actual.length-1;
+    svg += '<circle cx="'+sx(lastIdx)+'" cy="'+sy(Math.min(opts.actual[lastIdx],yMax))+'" r="4.5" fill="#4FB4A6" stroke="#0F1B33" stroke-width="1.5"><title>'+opts.xLabels[lastIdx]+': '+opts.actual[lastIdx].toLocaleString('id-ID')+'</title></circle>';
+  }
+
+  svg += '</svg>';
+
+  var legend = '<div class="chart-legend">';
+  legend += '<div class="legend-item"><span class="legend-swatch" style="background:repeating-linear-gradient(90deg,#E8A33D 0 6px,transparent 6px 10px)"></span>'+(opts.targetLabel||'Target')+'</div>';
+  legend += '<div class="legend-item"><span class="legend-swatch" style="background:#4FB4A6"></span>'+(opts.actualLabel||'Aktual')+'</div>';
+  legend += '</div>';
+
+  return svg + legend;
+}
+
+function renderVocabChart(containerId){
+  var el = document.getElementById(containerId);
+  if(!el) return;
+  var cum = vocabCumulative();
+  var labels = cum.map(function(c){ return "B"+c.m; });
+  var target = cum.map(function(c){ return c.cumTarget; });
+  var actual = cum.map(function(c){ return c.cumActual; });
+  var w = chartRenderWidth();
+  var h = w < 420 ? 190 : 220;
+  var everyN = Math.max(1, Math.ceil(labels.length / Math.max(4, Math.floor(w/48))));
+  el.innerHTML = svgLineChart({
+    width:w, height:h,
+    xLabels: labels, target: target, actual: actual, actualLine:true,
+    yMax: Math.max(8760, Math.max.apply(null, actual)) * 1.05,
+    xTickEvery: everyN, targetLabel:"Target kumulatif", actualLabel:"Aktual kumulatif",
+    ariaLabel:"Grafik kumulatif vocabulary aktual vs target"
+  });
+}
+
+function renderToeflChart(containerId){
+  var el = document.getElementById(containerId);
+  if(!el) return;
+  var labels = [];
+  for(var m=1;m<=12;m++) labels.push("B"+m);
+  var target = TOEFL_TARGETS.slice();
+  var actual = [];
+  for(m=1;m<=12;m++){ actual.push(bestScoreForMonth(m)); }
+  var w = chartRenderWidth();
+  var h = w < 420 ? 190 : 220;
+  var everyN = Math.max(1, Math.ceil(12 / Math.max(4, Math.floor(w/40))));
+  el.innerHTML = svgLineChart({
+    width:w, height:h,
+    xLabels: labels, target: target, actual: actual, actualDots:true,
+    yMax: 590, yTicks:4, xTickEvery:everyN,
+    targetLabel:"Target milestone", actualLabel:"Skor tercatat",
+    ariaLabel:"Grafik skor TOEFL aktual vs target per bulan"
+  });
+}
+
+/* ============================================================
+   RENDER: DASHBOARD
+   ============================================================ */
+function renderDashboard(){
+  var st = overallStudyStats();
+  document.getElementById("statProgressValue").innerHTML = st.done + '<span class="unit"> / 288 hari</span>';
+  document.getElementById("statProgressBar").style.width = st.pct + "%";
+  document.getElementById("statProgressSub").textContent = st.pct + "% selesai";
+
+  var streak = currentStreak();
+  document.getElementById("statStreak").innerHTML = streak + '<span class="unit"> hari 🔥</span>';
+  document.getElementById("statStreakBest").textContent = "Rekor terbaik: " + bestStreak() + " hari";
+
+  var vocabTotal = totalVocabActual();
+  var vocabTarget = vocabTargetToDate();
+  var vocabPct = vocabTarget>0 ? Math.min(100, Math.round(vocabTotal/vocabTarget*100)) : 0;
+  document.getElementById("statVocab").innerHTML = vocabTotal.toLocaleString('id-ID') + '<span class="unit"> kata</span>';
+  document.getElementById("statVocabBar").style.width = vocabPct + "%";
+  document.getElementById("statVocabSub").textContent = "Target sampai posisi ini: " + vocabTarget.toLocaleString('id-ID') + " kata (" + vocabPct + "%)";
+
+  var last = lastToeflScore();
+  if(last){
+    var target = TOEFL_TARGETS[Number(last.month)-1];
+    var delta = Number(last.score) - target;
+    document.getElementById("statToefl").textContent = last.score;
+    document.getElementById("statToeflSub").textContent = (last.label||"Tes") + " · Bulan " + last.month + " (target " + target + ", " + (delta>=0?"+":"") + delta + ")";
+  } else {
+    document.getElementById("statToefl").textContent = "—";
+    document.getElementById("statToeflSub").textContent = "Belum ada skor tercatat";
+  }
+
+  renderTodayCard();
+  renderVocabChart("dashVocabChart");
+  renderToeflChart("dashToeflChart");
+}
+
+function renderTodayCard(){
+  var pos = nextIncompleteDay();
+  var el = document.getElementById("todayCard");
+  if(!pos){
+    el.innerHTML = '<div class="today-eyebrow">Roadmap Selesai</div><div class="today-title">🎉 Semua 288 hari belajar sudah tercentang!</div><p style="color:var(--cream-dim); font-size:13.5px;">Saatnya fokus ke full mock test terakhir dan real TOEFL ITP test. Cek tab Skor TOEFL untuk catat hasil resmimu.</p>';
+    return;
+  }
+  var wk = WEEKS_DATA[pos.m-1][pos.w-1];
+  var tpl = DAY_TEMPLATE[pos.d-1];
+  var done = 0;
+  ITEM_KEYS.forEach(function(k){ if(state.checks[dayKey(pos.m,pos.w,pos.d,k)]) done++; });
+  el.innerHTML =
+    '<div class="today-eyebrow">Posisi Saat Ini</div>'+
+    '<div class="today-title">Bulan '+pos.m+' · Minggu '+pos.w+' · Day '+pos.d+' — '+tpl.primary+'</div>'+
+    '<div class="today-meta">'+
+      '<div><strong>Fase</strong>'+PHASES[pos.m-1]+'</div>'+
+      '<div><strong>Target TOEFL Bulan Ini</strong>'+TOEFL_TARGETS[pos.m-1]+'</div>'+
+      '<div><strong>Tema Vocab</strong>'+wk.v+'</div>'+
+      '<div><strong>Checklist</strong>'+done+' / 8 selesai</div>'+
+    '</div>'+
+    '<button class="btn" id="jumpTodayBtn">Buka Checklist Hari Ini →</button>';
+  document.getElementById("jumpTodayBtn").onclick = function(){ jumpToDay(pos.m,pos.w,pos.d); };
+}
+
+/* ============================================================
+   RENDER: ROADMAP
+   ============================================================ */
+function dayIconSpan(m,w,d){
+  var complete = d===7 ? isRestDayComplete(m,w) : isStudyDayComplete(m,w,d);
+  return '<span class="day-icon" id="dicon-'+m+'-'+w+'-'+d+'">'+(complete?'✅':'⬜')+'</span>';
+}
+
+function buildDayHTML(m,w,d){
+  if(d===7){
+    var checked = isRestDayComplete(m,w) ? 'checked' : '';
+    return (
+      '<details class="day-card rest-day" id="day-'+m+'-'+w+'-'+d+'">'+
+        '<summary><div class="day-summary-left">'+dayIconSpan(m,w,d)+'<span class="day-name">Day 7</span><span class="day-focus">Rest &amp; Light Exposure</span></div></summary>'+
+        '<div class="day-body">'+
+          '<div class="rest-line">'+
+            '<input type="checkbox" id="chk-'+m+'-'+w+'-'+d+'-rest" '+checked+'>'+
+            '<label for="chk-'+m+'-'+w+'-'+d+'-rest">Rest day — nonton/dengar konten Inggris santai tanpa target, murni for fun.</label>'+
+          '</div>'+
+        '</div>'+
+      '</details>'
+    );
+  }
+  var tpl = DAY_TEMPLATE[d-1];
+  var items = itemsForDay(m,w,d);
+  var itemsHTML = items.map(function(it){
+    var id = "chk-"+m+"-"+w+"-"+d+"-"+it.key;
+    var isChecked = state.checks[dayKey(m,w,d,it.key)] ? 'checked' : '';
+    return '<li><input type="checkbox" id="'+id+'" '+isChecked+'><label for="'+id+'">'+it.label+'</label><span class="mins">'+it.mins+'</span></li>';
+  }).join("");
+  return (
+    '<details class="day-card" id="day-'+m+'-'+w+'-'+d+'">'+
+      '<summary><div class="day-summary-left">'+dayIconSpan(m,w,d)+'<span class="day-name">Day '+d+'</span><span class="day-focus">'+tpl.primary+'</span></div></summary>'+
+      '<div class="day-body">'+
+        '<p class="day-secondary">Fokus sekunder: '+tpl.secondary+'</p>'+
+        '<ul class="checklist">'+itemsHTML+'</ul>'+
+      '</div>'+
+    '</details>'
+  );
+}
+
+function buildWeekHTML(m,w){
+  var wk = WEEKS_DATA[m-1][w-1];
+  var days = "";
+  for(var d=1; d<=7; d++){ days += buildDayHTML(m,w,d); }
+  return (
+    '<div class="week-card">'+
+      '<div class="week-head"><h4>Minggu '+w+'</h4><span class="badge" id="wbadge-'+m+'-'+w+'">'+weekCompleteCount(m,w)+' / 6 hari</span></div>'+
+      '<div class="week-meta">'+
+        '<div class="week-meta-item"><strong>Grammar Fokus</strong>'+wk.g+'</div>'+
+        '<div class="week-meta-item"><strong>Tema Vocab</strong>'+wk.v+'</div>'+
+        '<div class="week-meta-item"><strong>Listening</strong>'+wk.l+'</div>'+
+        '<div class="week-meta-item"><strong>Reading</strong>'+wk.r+'</div>'+
+        '<div class="week-meta-item"><strong>Milestone</strong>'+wk.ms+'</div>'+
+      '</div>'+
+      days+
+    '</div>'
+  );
+}
+
+function buildMonthHTML(m){
+  var weeksHTML = "";
+  for(var w=1; w<=4; w++){ weeksHTML += buildWeekHTML(m,w); }
+  return (
+    '<details class="month-card" id="month-'+m+'"'+(m===1?' open':'')+'>'+
+      '<summary>'+
+        '<div class="month-summary-left"><span class="month-title">Bulan '+m+' — '+PHASES[m-1]+'</span></div>'+
+        '<div class="month-tags"><span class="badge">TOEFL '+TOEFL_TARGETS[m-1]+'</span> <span class="badge">Vocab kum. '+VOCAB_CUM[m-1].toLocaleString('id-ID')+'</span> <span class="badge" id="mbadge-'+m+'">'+monthCompleteCount(m)+' / 24 hari</span></div>'+
+      '</summary>'+
+      '<div class="month-body">'+weeksHTML+'</div>'+
+    '</details>'
+  );
+}
+
+function renderRoadmap(){
+  var el = document.getElementById("roadmapContainer");
+  if(!el) return;
+  var html = "";
+  for(var m=1;m<=12;m++){ html += buildMonthHTML(m); }
+  el.innerHTML = html;
+}
+
+function jumpToDay(m,w,d){
+  showTab("roadmap");
+  requestAnimationFrame(function(){
+    var mo = document.getElementById("month-"+m);
+    if(mo) mo.open = true;
+    requestAnimationFrame(function(){
+      var da = document.getElementById("day-"+m+"-"+w+"-"+d);
+      if(da){ da.open = true; da.scrollIntoView({behavior:"smooth", block:"center"}); }
+    });
+  });
+}
+
+/* Event delegation for roadmap checkboxes — bound once, container innerHTML
+   is replaced on re-render but the container element itself persists. */
+function bindRoadmapEvents(){
+  document.getElementById("roadmapContainer").addEventListener("change", function(e){
+    var t = e.target;
+    if(t.tagName !== "INPUT" || t.type !== "checkbox") return;
+    var id = t.id; // chk-m-w-d-key
+    var parts = id.split("-");
+    var m = Number(parts[1]), w = Number(parts[2]), d = Number(parts[3]), key = parts[4];
+    var stateKey = (key === "rest") ? restKey(m,w) : dayKey(m,w,d,key);
+    state.checks[stateKey] = t.checked;
+    if(t.checked) recordActivity();
+    saveState();
+
+    var icon = document.getElementById("dicon-"+m+"-"+w+"-"+d);
+    if(icon){
+      var complete = d===7 ? isRestDayComplete(m,w) : isStudyDayComplete(m,w,d);
+      icon.textContent = complete ? "✅" : "⬜";
+    }
+    var wb = document.getElementById("wbadge-"+m+"-"+w);
+    if(wb) wb.textContent = weekCompleteCount(m,w) + " / 6 hari";
+    var mb = document.getElementById("mbadge-"+m);
+    if(mb) mb.textContent = monthCompleteCount(m) + " / 24 hari";
+
+    renderDashboard();
+  });
+}
+
+/* ============================================================
+   RENDER: VOCAB TABLE
+   ============================================================ */
+function renderVocabTable(){
+  var el = document.getElementById("vocabTable");
+  if(!el) return;
+  var cum = vocabCumulative();
+  var head = '<thead><tr><th>Bulan</th><th>Minggu</th><th>Target/minggu</th><th>Aktual</th><th>Kum. Aktual</th><th>Kum. Target</th><th>Selisih</th></tr></thead>';
+  var rows = cum.map(function(c,i){
+    var diff = c.cumActual - c.cumTarget;
+    var diffColor = diff >= 0 ? 'color:#2F857A;' : 'color:#B54638;';
+    return '<tr>'+
+      '<td>'+c.m+'</td><td>'+c.w+'</td><td>'+c.target+'</td>'+
+      '<td><input type="number" min="0" step="1" inputmode="numeric" data-m="'+c.m+'" data-w="'+c.w+'" value="'+c.actual+'" class="vocabInput"></td>'+
+      '<td id="cumA-'+i+'"><strong>'+c.cumActual.toLocaleString('id-ID')+'</strong></td>'+
+      '<td id="cumT-'+i+'">'+c.cumTarget.toLocaleString('id-ID')+'</td>'+
+      '<td id="diff-'+i+'" style="'+diffColor+'font-family:\'IBM Plex Mono\',monospace;">'+(diff>=0?'+':'')+diff.toLocaleString('id-ID')+'</td>'+
+    '</tr>';
+  }).join("");
+  el.innerHTML = head + '<tbody>'+rows+'</tbody>';
+}
+function updateVocabDerived(){
+  var cum = vocabCumulative();
+  cum.forEach(function(c,i){
+    var diff = c.cumActual - c.cumTarget;
+    var a = document.getElementById("cumA-"+i);
+    var tEl = document.getElementById("cumT-"+i);
+    var dEl = document.getElementById("diff-"+i);
+    if(a) a.innerHTML = "<strong>"+c.cumActual.toLocaleString('id-ID')+"</strong>";
+    if(tEl) tEl.textContent = c.cumTarget.toLocaleString('id-ID');
+    if(dEl){
+      dEl.textContent = (diff>=0?'+':'')+diff.toLocaleString('id-ID');
+      dEl.style.color = diff>=0 ? '#2F857A' : '#B54638';
+    }
+  });
+}
+
+/* ============================================================
+   RENDER: TOEFL SCORES
+   ============================================================ */
+function populateMonthSelect(id){
+  var sel = document.getElementById(id);
+  if(!sel) return;
+  var html = "";
+  for(var m=1;m<=12;m++){ html += '<option value="'+m+'">Bulan '+m+' ('+PHASES[m-1]+')</option>'; }
+  sel.innerHTML = html;
+}
+
+function renderToeflList(){
+  var el = document.getElementById("toeflList");
+  if(!el) return;
+  if(state.toeflScores.length === 0){
+    el.innerHTML = '<div class="empty-hint">Belum ada skor tercatat. Tambahkan hasil prediction test / mock test pertamamu di atas.</div>';
+    return;
+  }
+  var sorted = state.toeflScores.slice().sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
+  el.innerHTML = sorted.map(function(s){
+    var target = TOEFL_TARGETS[Number(s.month)-1];
+    var delta = Number(s.score) - target;
+    return '<div class="entry-row">'+
+      '<div class="entry-main">'+
+        '<div class="entry-date">'+(s.date||"-")+' · Bulan '+s.month+' · target '+target+' ('+(delta>=0?'+':'')+delta+')</div>'+
+        '<div class="entry-text"><strong style="color:var(--cream)">'+escapeHTML(s.label||"Tes TOEFL")+'</strong></div>'+
+      '</div>'+
+      '<div class="entry-score">'+s.score+'</div>'+
+      '<button class="entry-delete" data-id="'+s.id+'">Hapus</button>'+
+    '</div>';
+  }).join("");
+  el.querySelectorAll(".entry-delete").forEach(function(btn){
+    btn.onclick = function(){
+      var id = this.dataset.id;
+      state.toeflScores = state.toeflScores.filter(function(s){ return String(s.id) !== id; });
+      saveState();
+      renderToeflList();
+      renderToeflChart("toeflChart");
+      renderDashboard();
+    };
+  });
+}
+
+function showToast(id){
+  var t = document.getElementById(id);
+  t.classList.add("show");
+  setTimeout(function(){ t.classList.remove("show"); }, 1600);
+}
+
+/* ============================================================
+   RENDER: ERROR LOG
+   ============================================================ */
+function renderErrorList(){
+  var el = document.getElementById("errorList");
+  if(!el) return;
+  if(state.errors.length === 0){
+    el.innerHTML = '<div class="empty-hint">Belum ada catatan kesalahan. Mulai dengan mencatat 1 kesalahan besar hari ini.</div>';
+    return;
+  }
+  var sorted = state.errors.slice().sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
+  el.innerHTML = sorted.map(function(er){
+    return '<div class="entry-row">'+
+      '<div class="entry-main"><div class="entry-date">'+er.date+'</div><div class="entry-text">'+escapeHTML(er.text)+'</div></div>'+
+      '<button class="entry-delete" data-id="'+er.id+'">Hapus</button>'+
+    '</div>';
+  }).join("");
+  el.querySelectorAll(".entry-delete").forEach(function(btn){
+    btn.onclick = function(){
+      var id = this.dataset.id;
+      state.errors = state.errors.filter(function(e){ return String(e.id) !== id; });
+      saveState();
+      renderErrorList();
+    };
+  });
+}
+function escapeHTML(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+
+/* ============================================================
+   RENDER: WEEKLY REVIEW
+   ============================================================ */
+function reviewKey(m,w){ return m+"_"+w; }
+function loadReviewForm(){
+  var mSel = document.getElementById("reviewMonth");
+  var wSel = document.getElementById("reviewWeek");
+  if(!mSel || !wSel) return;
+  var m = Number(mSel.value);
+  var w = Number(wSel.value);
+  var rv = state.reviews[reviewKey(m,w)] || {improved:"", weak:"", plan:""};
+  document.getElementById("reviewImproved").value = rv.improved;
+  document.getElementById("reviewWeak").value = rv.weak;
+  document.getElementById("reviewPlan").value = rv.plan;
+}
+function renderReviewList(){
+  var el = document.getElementById("reviewList");
+  if(!el) return;
+  var keys = Object.keys(state.reviews).filter(function(k){
+    var r = state.reviews[k];
+    return r.improved || r.weak || r.plan;
+  });
+  if(keys.length === 0){
+    el.innerHTML = '<div class="empty-hint">Belum ada weekly review tersimpan.</div>';
+    return;
+  }
+  keys.sort(function(a,b){
+    var pa = a.split("_").map(Number), pb = b.split("_").map(Number);
+    return (pa[0]-pb[0]) || (pa[1]-pb[1]);
+  });
+  el.innerHTML = keys.map(function(k){
+    var parts = k.split("_");
+    var r = state.reviews[k];
+    return '<div class="entry-row"><div class="entry-main">'+
+      '<div class="entry-date">Bulan '+parts[0]+' · Minggu '+parts[1]+'</div>'+
+      (r.improved ? '<div class="entry-text"><strong style="color:var(--teal)">Improve:</strong> '+escapeHTML(r.improved)+'</div>' : '')+
+      (r.weak ? '<div class="entry-text"><strong style="color:var(--danger)">Lemah:</strong> '+escapeHTML(r.weak)+'</div>' : '')+
+      (r.plan ? '<div class="entry-text"><strong style="color:var(--amber)">Rencana:</strong> '+escapeHTML(r.plan)+'</div>' : '')+
+    '</div></div>';
+  }).join("");
+}
+
+/* ============================================================
+   TABS / NAV
+   ============================================================ */
+function showTab(name){
+  document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
+  document.getElementById("panel-"+name).classList.add("active");
+  document.querySelectorAll(".nav-link").forEach(function(l){ l.classList.toggle("active", l.dataset.tab === name); });
+  document.getElementById("sidebar").classList.remove("open");
+  window.scrollTo(0,0);
+}
+
+/* ============================================================
+   EVENT BINDING (once) + DATA RENDER (every login)
+   ============================================================ */
+var eventsBound = false;
+function bindAllEventsOnce(){
+  if(eventsBound) return;
+  eventsBound = true;
+
+  document.querySelectorAll(".nav-link").forEach(function(l){
+    l.addEventListener("click", function(){ showTab(this.dataset.tab); });
+  });
+  document.getElementById("navToggle").addEventListener("click", function(){
+    document.getElementById("sidebar").classList.toggle("open");
+  });
+  document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+
+  bindRoadmapEvents();
+
+  document.getElementById("vocabTable").addEventListener("input", function(e){
+    var t = e.target;
+    if(!t.classList.contains("vocabInput")) return;
+    var m = Number(t.dataset.m), w = Number(t.dataset.w);
+    state.vocab[vocabKey(m,w)] = Number(t.value || 0);
+    saveState();
+    updateVocabDerived();
+    renderVocabChart("vocabChart");
+    renderDashboard();
+  });
+
+  document.getElementById("toeflAddBtn").addEventListener("click", function(){
+    var date = document.getElementById("toeflDate").value || todayStr();
+    var month = document.getElementById("toeflMonth").value;
+    var label = document.getElementById("toeflLabel").value.trim() || "Tes TOEFL";
+    var score = Number(document.getElementById("toeflScore").value);
+    if(!score || score < 310 || score > 677){ alert("Masukkan skor TOEFL ITP yang valid (310–677)."); return; }
+    state.toeflScores.push({id: Date.now(), date:date, month:month, label:label, score:score});
+    saveState();
+    document.getElementById("toeflLabel").value = "";
+    document.getElementById("toeflScore").value = "";
+    renderToeflList();
+    renderToeflChart("toeflChart");
+    renderDashboard();
+    showToast("toeflToast");
+  });
+
+  document.getElementById("errorAddBtn").addEventListener("click", function(){
+    var text = document.getElementById("errorText").value.trim();
+    if(!text) return;
+    state.errors.push({id: Date.now(), date: todayStr(), text: text});
+    saveState();
+    document.getElementById("errorText").value = "";
+    renderErrorList();
+    showToast("errorToast");
+  });
+
+  document.getElementById("reviewMonth").addEventListener("change", loadReviewForm);
+  document.getElementById("reviewWeek").addEventListener("change", loadReviewForm);
+  document.getElementById("reviewSaveBtn").addEventListener("click", function(){
+    var m = Number(document.getElementById("reviewMonth").value);
+    var w = Number(document.getElementById("reviewWeek").value);
+    state.reviews[reviewKey(m,w)] = {
+      improved: document.getElementById("reviewImproved").value.trim(),
+      weak: document.getElementById("reviewWeak").value.trim(),
+      plan: document.getElementById("reviewPlan").value.trim()
+    };
+    saveState();
+    renderReviewList();
+    showToast("reviewToast");
+  });
+
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "toefl-tracker-" + (currentProfileKey||"backup") + "-" + todayStr() + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+  document.getElementById("importFile").addEventListener("change", function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      try{
+        var parsed = JSON.parse(ev.target.result);
+        if(!confirm("Import akan menimpa semua data akun '"+currentProfileName+"' saat ini. Lanjutkan?")) return;
+        var d = defaultState();
+        for(var k in d){ if(parsed[k] === undefined) parsed[k] = d[k]; }
+        state = parsed;
+        saveState();
+        renderAppData();
+        alert("Import berhasil.");
+      }catch(err){
+        alert("File JSON tidak valid.");
+      }
+      e.target.value = "";
+    };
+    reader.readAsText(file);
+  });
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if(!confirm("Yakin ingin menghapus SEMUA progress akun '"+currentProfileName+"' (checklist, vocab, skor TOEFL, error log, weekly review)? Tindakan ini tidak bisa dibatalkan.")) return;
+    if(!confirm("Konfirmasi sekali lagi — reset semua data sekarang?")) return;
+    state = defaultState();
+    saveState();
+    renderAppData();
+  });
+
+  window.addEventListener("resize", debounce(rerenderCharts, 200));
+}
+
+function renderAppData(){
+  renderRoadmap();
+  renderVocabTable();
+  populateMonthSelect("toeflMonth");
+  populateMonthSelect("reviewMonth");
+  var td = document.getElementById("toeflDate");
+  if(td && !td.value) td.value = todayStr();
+  renderToeflList();
+  renderErrorList();
+  loadReviewForm();
+  renderReviewList();
+  renderDashboard(); // also draws dashboard charts
+  renderVocabChart("vocabChart");
+  renderToeflChart("toeflChart");
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function init(){
+  bindAuthEvents();
+  renderAuthScreen();
+
+  var session = localStorage.getItem(SESSION_KEY);
+  if(session){
+    var profiles = loadProfiles();
+    if(profiles[session]){
+      loginSuccess(session, profiles[session].displayName);
+      return;
+    }
+    localStorage.removeItem(SESSION_KEY);
+  }
+  document.getElementById("authScreen").style.display = "";
+  document.getElementById("appShell").style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
+</body>
+</html>
