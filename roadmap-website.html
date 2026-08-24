@@ -1,1 +1,869 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap 12 Bulan — English + TOEFL ITP 560+ untuk IT Professional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1B33;
+  --ink-soft:#16264A;
+  --ink-line:#28375C;
+  --paper:#F4EFE3;
+  --paper-line:#E2D9C4;
+  --paper-ink:#1C2238;
+  --amber:#E8A33D;
+  --amber-deep:#C77E17;
+  --teal:#4FB4A6;
+  --teal-deep:#2F857A;
+  --cream:#F4EFE3;
+  --cream-dim:rgba(244,239,227,0.68);
+  --cream-dim2:rgba(244,239,227,0.45);
+  --radius:14px;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--cream);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+}
+::selection{background:var(--amber); color:var(--ink);}
+a{color:inherit;}
+code{
+  font-family:'IBM Plex Mono',monospace;
+  background:rgba(255,255,255,0.08);
+  padding:0.1em 0.4em;
+  border-radius:4px;
+  font-size:0.92em;
+}
+strong{color:inherit; font-weight:600;}
 
+/* ---------- Top bar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 24px;
+  background:rgba(15,27,51,0.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--ink-line);
+}
+.topbar .brand{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  letter-spacing:0.08em;
+  color:var(--amber);
+  text-decoration:none;
+}
+.nav-toggle{
+  display:none;
+  background:none;border:1px solid var(--ink-line); color:var(--cream);
+  border-radius:8px; padding:8px 12px; font-size:14px; cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;
+}
+
+/* ---------- Layout ---------- */
+.layout{
+  display:grid;
+  grid-template-columns:230px 1fr;
+  max-width:var(--maxw);
+  margin:0 auto;
+  gap:0;
+}
+.sidebar{
+  position:sticky; top:57px;
+  align-self:start;
+  height:calc(100vh - 57px);
+  overflow-y:auto;
+  padding:28px 14px 40px 24px;
+  border-right:1px solid var(--ink-line);
+}
+.sidebar-title{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px; letter-spacing:0.1em; color:var(--cream-dim2);
+  text-transform:uppercase; margin-bottom:12px;
+}
+.nav-link{
+  display:block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  color:var(--cream-dim);
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:8px;
+  margin-bottom:2px;
+  transition:background 0.15s, color 0.15s;
+  line-height:1.35;
+}
+.nav-link:hover{background:var(--ink-soft); color:var(--cream);}
+.nav-link.active{background:var(--ink-soft); color:var(--amber); border-left:2px solid var(--amber); padding-left:8px;}
+
+.main{padding:0 32px 80px 40px; min-width:0;}
+
+/* ---------- Hero ---------- */
+.hero{
+  padding:64px 32px 40px 40px;
+  max-width:var(--maxw);
+  margin:0 auto;
+}
+.hero-eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px; letter-spacing:0.12em;
+  color:var(--amber); text-transform:uppercase;
+  margin-bottom:18px;
+}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(2rem, 4.4vw, 3.4rem);
+  line-height:1.08;
+  margin:0 0 20px 0;
+  max-width:15ch;
+}
+.hero-sub{
+  font-size:17px;
+  color:var(--cream-dim);
+  max-width:56ch;
+  margin-bottom:8px;
+}
+.meta-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin:32px 0 8px 0;
+  padding-top:24px;
+  border-top:1px solid var(--ink-line);
+}
+.meta-item{display:flex; flex-direction:column; gap:4px;}
+.meta-label{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em;
+  color:var(--cream-dim2); text-transform:uppercase;
+}
+.meta-value{font-size:14.5px; color:var(--cream-dim);}
+
+.principles{
+  margin-top:28px;
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-left:3px solid var(--amber);
+  border-radius:var(--radius);
+  padding:22px 26px;
+}
+.principles-title{
+  font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em;
+  color:var(--amber); text-transform:uppercase; margin-bottom:10px;
+}
+.principles ul{margin:0; padding-left:20px;}
+.principles li{margin-bottom:6px; color:var(--cream-dim); font-size:14.5px;}
+.principles li strong{color:var(--cream);}
+
+/* ---------- Rail ---------- */
+.rail-wrap{
+  max-width:var(--maxw); margin:0 auto; padding:6px 32px 56px 40px;
+}
+.rail-label{
+  font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em;
+  color:var(--cream-dim2); text-transform:uppercase; margin-bottom:14px;
+}
+.rail{
+  display:flex; gap:0; overflow-x:auto; padding-bottom:14px;
+  scrollbar-width:thin;
+}
+.rail::-webkit-scrollbar{height:6px;}
+.rail::-webkit-scrollbar-thumb{background:var(--ink-line); border-radius:4px;}
+.rail-stop{
+  position:relative;
+  flex:0 0 auto;
+  min-width:118px;
+  text-decoration:none;
+  padding:16px 14px 14px 14px;
+  display:flex; flex-direction:column; gap:6px;
+  border-top:2px solid var(--ink-line);
+  transition:border-color 0.15s, transform 0.15s;
+}
+.rail-stop::before{
+  content:"";
+  position:absolute; top:-2px; left:0;
+  width:8px; height:2px; background:var(--amber);
+}
+.rail-stop:hover{border-top-color:var(--amber); transform:translateY(-2px);}
+.rail-num{
+  font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:600;
+  color:var(--amber);
+}
+.rail-phase{font-size:12.5px; color:var(--cream-dim); line-height:1.3; min-height:32px;}
+.rail-score{
+  font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--teal);
+}
+.rail-score::before{content:"TOEFL "; color:var(--cream-dim2);}
+
+/* ---------- Content sections ---------- */
+.content-section{
+  padding:52px 0;
+  border-bottom:1px solid var(--ink-line);
+}
+.content-section:last-child{border-bottom:none;}
+.section-head{
+  display:flex; align-items:baseline; gap:16px;
+  margin-bottom:22px;
+}
+.section-num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14px; color:var(--amber);
+  border:1px solid var(--ink-line);
+  border-radius:100px;
+  padding:4px 12px;
+}
+.section-head h2{
+  font-family:'Fraunces',serif; font-weight:600;
+  font-size:clamp(1.4rem,2.6vw,2rem);
+  margin:0; color:var(--cream);
+}
+.section-body p{color:var(--cream-dim); font-size:15px;}
+.sub-h3{
+  font-family:'Fraunces',serif; font-weight:600; color:var(--teal);
+  font-size:1.2rem; margin:30px 0 12px 0;
+}
+.sub-h4{
+  font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--amber);
+  font-size:0.95rem; letter-spacing:0.02em;
+  margin:22px 0 10px 0; text-transform:uppercase;
+}
+.styled-list{padding-left:22px; color:var(--cream-dim);}
+.styled-list li{margin-bottom:8px; font-size:15px;}
+.styled-list li strong{color:var(--cream);}
+
+.callout{
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-left:3px solid var(--teal);
+  border-radius:var(--radius);
+  padding:16px 22px;
+  margin:16px 0 22px 0;
+}
+.callout p{margin:6px 0; font-size:14.5px; color:var(--cream-dim);}
+
+/* ---------- Tables ---------- */
+.table-wrap{
+  overflow-x:auto;
+  margin:14px 0 26px 0;
+  border-radius:var(--radius);
+  border:1px solid var(--paper-line);
+}
+table.data-table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:640px;
+  background:var(--paper);
+  color:var(--paper-ink);
+}
+table.data-table th{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px; letter-spacing:0.04em; text-transform:uppercase;
+  background:#EADFC5;
+  color:#4A3E22;
+  text-align:left;
+  padding:11px 14px;
+  border-bottom:1px solid var(--paper-line);
+  white-space:nowrap;
+}
+table.data-table td{
+  padding:11px 14px;
+  font-size:13.8px;
+  border-bottom:1px solid var(--paper-line);
+  vertical-align:top;
+}
+table.data-table tbody tr:nth-child(even){background:#EFE9DA;}
+table.data-table tbody tr:hover{background:#E4D9BC;}
+table.data-table td strong{color:var(--amber-deep);}
+
+/* ---------- Month/week collapsibles ---------- */
+details.month-card{
+  background:var(--ink-soft);
+  border:1px solid var(--ink-line);
+  border-radius:var(--radius);
+  margin-bottom:14px;
+  overflow:hidden;
+}
+details.month-card summary{
+  cursor:pointer;
+  list-style:none;
+  padding:16px 20px;
+  font-family:'Fraunces',serif; font-weight:600; font-size:1.02rem;
+  color:var(--cream);
+  display:flex; align-items:center; gap:10px;
+}
+details.month-card summary::-webkit-details-marker{display:none;}
+details.month-card summary::before{
+  content:"+";
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--amber);
+  font-size:16px;
+  width:18px; text-align:center;
+  transition:transform 0.2s;
+}
+details.month-card[open] summary::before{content:"–";}
+.month-body{padding:4px 20px 20px 20px;}
+
+/* ---------- AI Prompt cards ---------- */
+.prompt-card{
+  background:#0B1120;
+  border:1px solid var(--ink-line);
+  border-radius:var(--radius);
+  padding:18px 22px;
+  margin:14px 0 26px 0;
+  position:relative;
+}
+.prompt-card::before{
+  content:"● ● ●";
+  display:block;
+  font-size:10px;
+  letter-spacing:4px;
+  color:#3A4560;
+  margin-bottom:12px;
+}
+.prompt-card p{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13.2px;
+  line-height:1.65;
+  color:#B9E4DC;
+  margin:0;
+}
+
+/* ---------- Footer ---------- */
+.footer{
+  max-width:var(--maxw); margin:0 auto;
+  padding:40px 32px 70px 40px;
+  text-align:left;
+}
+.footer-title{
+  font-family:'Fraunces',serif; font-weight:700; font-size:1.6rem;
+  color:var(--cream); margin-bottom:10px;
+}
+.footer p{color:var(--cream-dim); max-width:60ch;}
+.back-top{
+  display:inline-block; margin-top:18px;
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+  color:var(--amber); text-decoration:none;
+  border:1px solid var(--ink-line); border-radius:100px;
+  padding:8px 16px;
+}
+.back-top:hover{border-color:var(--amber);}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{
+    position:fixed; top:53px; left:0; right:0; bottom:0;
+    height:auto; max-height:calc(100vh - 53px);
+    background:var(--ink); z-index:40;
+    transform:translateY(-110%);
+    transition:transform 0.25s ease;
+    border-right:none;
+    padding:20px 24px 40px 24px;
+  }
+  .sidebar.open{transform:translateY(0);}
+  .nav-toggle{display:inline-block;}
+  .main{padding:0 20px 60px 20px;}
+  .hero{padding:40px 20px 24px 20px;}
+  .rail-wrap{padding:6px 20px 40px 20px;}
+  .footer{padding:32px 20px 60px 20px;}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="#top" class="brand">ROADMAP · EN+TOEFL+IT</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Buka navigasi">☰ MENU</button>
+</div>
+
+<div class="layout" id="top">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-title">Daftar Isi</div>
+    <a href="#sec-overview" class="nav-link" data-slug="overview">1 · Roadmap 12 Bulan</a>
+<a href="#sec-grammar" class="nav-link" data-slug="grammar">2 · Peta Grammar</a>
+<a href="#sec-vocab" class="nav-link" data-slug="vocab">3 · Sistem Vocabulary</a>
+<a href="#sec-skills" class="nav-link" data-slug="skills">4 · Progresi Skill</a>
+<a href="#sec-toefl" class="nav-link" data-slug="toefl">5 · Roadmap TOEFL ITP</a>
+<a href="#sec-routine" class="nav-link" data-slug="routine">6 · Rutinitas Harian</a>
+<a href="#sec-weekly" class="nav-link" data-slug="weekly">7 · Template Mingguan</a>
+<a href="#sec-month1" class="nav-link" data-slug="month1">8 · Detail Bulan 1</a>
+<a href="#sec-matrix" class="nav-link" data-slug="matrix">9 · Matriks Bulan 2–12</a>
+<a href="#sec-milestone" class="nav-link" data-slug="milestone">10 · Milestone &amp; Checklist</a>
+<a href="#sec-resources" class="nav-link" data-slug="resources">11 · Resource Gratis</a>
+<a href="#sec-ai" class="nav-link" data-slug="ai">12 · AI Companion</a>
+<a href="#sec-eval" class="nav-link" data-slug="eval">13 · Sistem Evaluasi</a>
+<a href="#sec-tips" class="nav-link" data-slug="tips">14 · Tips Konsistensi</a>
+  </nav>
+
+  <main class="main">
+    <section class="hero">
+      <div class="hero-eyebrow">12-Bulan Roadmap · English + TOEFL ITP + IT Professional</div>
+      <h1>🎓 ROADMAP 12 BULAN: MASTER ENGLISH FOR IT PROFESSIONALS + TOEFL ITP 560+</h1>
+      <p class="hero-sub">English Coach × TOEFL Coach × Curriculum Designer × Language Learning Expert</p>
+      <div class="meta-grid">
+        <div class="meta-item"><span class="meta-label">Profil Pembelajar</span><span class="meta-value">Intermediate (B1–B2) → Target Upper-Intermediate/Advanced (C1)</span></div>
+<div class="meta-item"><span class="meta-label">Fokus</span><span class="meta-value">Akademik + Profesional + Teknologi/IT</span></div>
+<div class="meta-item"><span class="meta-label">Durasi</span><span class="meta-value">12 bulan | 6 hari/minggu | 2–3 jam/hari (≈ 720–1.080 jam total)</span></div>
+<div class="meta-item"><span class="meta-label">Metodologi</span><span class="meta-value">Comprehensible Input (Krashen), Spaced Repetition (SRS), Deliberate Practice (Ericsson), Shadowing Technique, Output-Input Cycle, Interleaving</span></div>
+
+      </div>
+      <div class="principles">
+        <div class="principles-title">Prinsip evidence-based yang dipakai</div>
+        <ul><li><strong>Spaced Repetition</strong> — vocabulary diulang dengan interval meningkat (Anki/SRS) agar masuk long-term memory.</li><li><strong>Comprehensible Input +1</strong> — materi listening/reading sedikit di atas level saat ini, bukan terlalu mudah/sulit.</li><li><strong>Output Practice</strong> — speaking &amp; writing wajib tiap hari (bukan hanya pasif input).</li><li><strong>Shadowing</strong> — teknik terbukti efektif untuk pronunciation &amp; fluency (dipakai interpreter profesional).</li><li><strong>Interleaving</strong> — skill dicampur tiap hari (bukan blok 1 skill saja) agar transfer lebih baik.</li><li><strong>Testing Effect</strong> — self-quiz &amp; mock test rutin lebih efektif daripada re-reading pasif.</li></ul>
+      </div>
+    </section>
+
+    <div class="rail-wrap">
+      <div class="rail-label">Perjalanan 12 bulan — klik satu titik untuk lompat ke bulan itu</div>
+      <div class="rail" role="list">
+    <a class="rail-stop" href="#month-1" role="listitem" data-month="1">
+      <span class="rail-num">01</span>
+      <span class="rail-phase">Foundation Rebuild</span>
+      <span class="rail-score">450</span>
+    </a>
+    <a class="rail-stop" href="#month-2" role="listitem" data-month="2">
+      <span class="rail-num">02</span>
+      <span class="rail-phase">Foundation+</span>
+      <span class="rail-score">470</span>
+    </a>
+    <a class="rail-stop" href="#month-3" role="listitem" data-month="3">
+      <span class="rail-num">03</span>
+      <span class="rail-phase">Structure Building</span>
+      <span class="rail-score">490</span>
+    </a>
+    <a class="rail-stop" href="#month-4" role="listitem" data-month="4">
+      <span class="rail-num">04</span>
+      <span class="rail-phase">Structure Building+</span>
+      <span class="rail-score">500</span>
+    </a>
+    <a class="rail-stop" href="#month-5" role="listitem" data-month="5">
+      <span class="rail-num">05</span>
+      <span class="rail-phase">Complexity</span>
+      <span class="rail-score">510</span>
+    </a>
+    <a class="rail-stop" href="#month-6" role="listitem" data-month="6">
+      <span class="rail-num">06</span>
+      <span class="rail-phase">Complexity+</span>
+      <span class="rail-score">520</span>
+    </a>
+    <a class="rail-stop" href="#month-7" role="listitem" data-month="7">
+      <span class="rail-num">07</span>
+      <span class="rail-phase">Academic Push</span>
+      <span class="rail-score">525</span>
+    </a>
+    <a class="rail-stop" href="#month-8" role="listitem" data-month="8">
+      <span class="rail-num">08</span>
+      <span class="rail-phase">Academic Push+</span>
+      <span class="rail-score">535</span>
+    </a>
+    <a class="rail-stop" href="#month-9" role="listitem" data-month="9">
+      <span class="rail-num">09</span>
+      <span class="rail-phase">Fluency Integration</span>
+      <span class="rail-score">545</span>
+    </a>
+    <a class="rail-stop" href="#month-10" role="listitem" data-month="10">
+      <span class="rail-num">10</span>
+      <span class="rail-phase">Fluency Integration+</span>
+      <span class="rail-score">550</span>
+    </a>
+    <a class="rail-stop" href="#month-11" role="listitem" data-month="11">
+      <span class="rail-num">11</span>
+      <span class="rail-phase">Peak Performance</span>
+      <span class="rail-score">555</span>
+    </a>
+    <a class="rail-stop" href="#month-12" role="listitem" data-month="12">
+      <span class="rail-num">12</span>
+      <span class="rail-phase">Exam Ready</span>
+      <span class="rail-score">560+</span>
+    </a></div>
+    </div>
+
+    
+<section id="sec-overview" class="content-section">
+  <div class="section-head">
+    <span class="section-num">1</span>
+    <h2>Roadmap 12 Bulan</h2>
+  </div>
+  <div class="section-body">
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Bulan</th><th>Fase</th><th>Fokus Utama</th><th>Tema Vocabulary</th><th>Target TOEFL ITP</th><th>Milestone Akhir Bulan</th></tr></thead><tbody><tr><td data-label="Bulan">1</td><td data-label="Fase">Foundation Rebuild</td><td data-label="Fokus Utama">Grammar dasar–menengah, listening habit, vocab dasar</td><td data-label="Tema Vocabulary">Daily Life, Basic Academic</td><td data-label="Target TOEFL ITP"><strong>450</strong></td><td data-label="Milestone Akhir Bulan">Bisa cerita rutinitas harian 3 menit tanpa jeda panjang</td></tr><tr><td data-label="Bulan">2</td><td data-label="Fase">Foundation+</td><td data-label="Fokus Utama">Tenses lengkap, listening VOA/BBC, reading news</td><td data-label="Tema Vocabulary">Education, Travel</td><td data-label="Target TOEFL ITP"><strong>470</strong></td><td data-label="Milestone Akhir Bulan">Paham berita pendek tanpa subtitle 70%</td></tr><tr><td data-label="Bulan">3</td><td data-label="Fase">Structure Building</td><td data-label="Fokus Utama">Passive, Reported Speech, Clauses dasar</td><td data-label="Tema Vocabulary">Business Basic, Technology</td><td data-label="Target TOEFL ITP"><strong>490</strong></td><td data-label="Milestone Akhir Bulan">Bisa nulis email profesional simpel</td></tr><tr><td data-label="Bulan">4</td><td data-label="Fase">Structure Building+</td><td data-label="Fokus Utama">Relative &amp; Adverb Clause, TOEFL Structure intensif</td><td data-label="Tema Vocabulary">Programming Basic 1</td><td data-label="Target TOEFL ITP"><strong>500</strong></td><td data-label="Milestone Akhir Bulan">Mock Test #1 — identifikasi kelemahan</td></tr><tr><td data-label="Bulan">5</td><td data-label="Fase">Complexity</td><td data-label="Fokus Utama">Conditional, Modal, Noun Clause</td><td data-label="Tema Vocabulary">Programming Basic 2, Science</td><td data-label="Target TOEFL ITP"><strong>510</strong></td><td data-label="Milestone Akhir Bulan">Baca 1 dokumentasi teknis pendek tanpa translate</td></tr><tr><td data-label="Bulan">6</td><td data-label="Fase">Complexity+</td><td data-label="Fokus Utama">Gerund/Infinitive, Reduced Clause</td><td data-label="Tema Vocabulary">Economy, Health</td><td data-label="Target TOEFL ITP"><strong>520</strong></td><td data-label="Milestone Akhir Bulan"><strong>Quarterly TOEFL Simulation #1</strong></td></tr><tr><td data-label="Bulan">7</td><td data-label="Fase">Academic Push</td><td data-label="Fokus Utama">Inversion, Advanced Sentence Structure</td><td data-label="Tema Vocabulary">AWL Batch 1, Politics</td><td data-label="Target TOEFL ITP"><strong>525</strong></td><td data-label="Milestone Akhir Bulan">Presentasi 5 menit topik teknis (rekam video)</td></tr><tr><td data-label="Bulan">8</td><td data-label="Fase">Academic Push+</td><td data-label="Fokus Utama">Academic Grammar, Error Analysis mendalam</td><td data-label="Tema Vocabulary">AWL Batch 2, Idioms/Collocation</td><td data-label="Target TOEFL ITP"><strong>535</strong></td><td data-label="Milestone Akhir Bulan">Diskusi 20 menit dengan AI tanpa translate mental</td></tr><tr><td data-label="Bulan">9</td><td data-label="Fase">Fluency Integration</td><td data-label="Fokus Utama">Grammar review terintegrasi + speed reading</td><td data-label="Tema Vocabulary">Phrasal Verb, Synonym/Antonym</td><td data-label="Target TOEFL ITP"><strong>545</strong></td><td data-label="Milestone Akhir Bulan">Ikut 1 mock meeting internasional (simulasi)</td></tr><tr><td data-label="Bulan">10</td><td data-label="Fase">Fluency Integration+</td><td data-label="Fokus Utama">TOEFL intensif semua section</td><td data-label="Tema Vocabulary">TOEFL High-Frequency Vocab</td><td data-label="Target TOEFL ITP"><strong>550</strong></td><td data-label="Milestone Akhir Bulan"><strong>Quarterly TOEFL Simulation #2</strong></td></tr><tr><td data-label="Bulan">11</td><td data-label="Fase">Peak Performance</td><td data-label="Fokus Utama">Mock test mingguan, error drilling</td><td data-label="Tema Vocabulary">Advanced Academic/Tech</td><td data-label="Target TOEFL ITP"><strong>555</strong></td><td data-label="Milestone Akhir Bulan">Interview kerja simulasi (rekam, evaluasi AI)</td></tr><tr><td data-label="Bulan">12</td><td data-label="Fase">Exam Ready</td><td data-label="Fokus Utama">Full mock test 2x/minggu, fine-tuning</td><td data-label="Tema Vocabulary">Review total 7.000–9.000 kata</td><td data-label="Target TOEFL ITP"><strong>560+</strong></td><td data-label="Milestone Akhir Bulan"><strong>Real TOEFL ITP Test</strong></td></tr></tbody></table></div>
+<p><strong>Total jam belajar:</strong> ±288 hari × 2.5 jam ≈ <strong>720 jam</strong> (setara ±30 SKS kuliah bahasa intensif)</p>
+  </div>
+</section>
+
+<section id="sec-grammar" class="content-section">
+  <div class="section-head">
+    <span class="section-num">2</span>
+    <h2>Peta Grammar</h2>
+  </div>
+  <div class="section-body">
+    <p>Urutan ini disusun berdasarkan <strong>dependency logis</strong> (topik dasar harus dikuasai dulu sebelum topik lanjutan yang membutuhkannya) dan kebutuhan TOEFL Structure &amp; Written Expression.</p>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Urutan</th><th>Topik Grammar</th><th>Bulan</th><th>Alasan Urutan</th></tr></thead><tbody><tr><td data-label="Urutan">1</td><td data-label="Topik Grammar">Review Tenses (12 tenses + perfect continuous)</td><td data-label="Bulan">1</td><td data-label="Alasan Urutan">Fondasi semua kalimat; sering salah di level intermediate</td></tr><tr><td data-label="Urutan">2</td><td data-label="Topik Grammar">Parts of Speech &amp; Sentence Pattern (S-V-O-C)</td><td data-label="Bulan">1</td><td data-label="Alasan Urutan">Wajib sebelum masuk clause kompleks</td></tr><tr><td data-label="Urutan">3</td><td data-label="Topik Grammar">Passive Voice</td><td data-label="Bulan">2</td><td data-label="Alasan Urutan">Umum di academic writing &amp; dokumentasi teknis</td></tr><tr><td data-label="Urutan">4</td><td data-label="Topik Grammar">Reported Speech (Direct→Indirect)</td><td data-label="Bulan">2</td><td data-label="Alasan Urutan">Dibutuhkan untuk retelling &amp; meeting recap</td></tr><tr><td data-label="Urutan">5</td><td data-label="Topik Grammar">Relative Clause (Adjective Clause)</td><td data-label="Bulan">3</td><td data-label="Alasan Urutan">Dasar untuk clause kompleks berikutnya</td></tr><tr><td data-label="Urutan">6</td><td data-label="Topik Grammar">Adjective Clause Reduction</td><td data-label="Bulan">3</td><td data-label="Alasan Urutan">Lanjutan langsung dari relative clause</td></tr><tr><td data-label="Urutan">7</td><td data-label="Topik Grammar">Noun Clause</td><td data-label="Bulan">4</td><td data-label="Alasan Urutan">Sering muncul di TOEFL Structure</td></tr><tr><td data-label="Urutan">8</td><td data-label="Topik Grammar">Adverb Clause (time, reason, contrast, purpose)</td><td data-label="Bulan">4</td><td data-label="Alasan Urutan">Melengkapi 3 jenis clause (noun/adj/adverb)</td></tr><tr><td data-label="Urutan">9</td><td data-label="Topik Grammar">Conditional Sentences (0–3 + mixed)</td><td data-label="Bulan">5</td><td data-label="Alasan Urutan">Butuh pemahaman tense yang kuat (langkah 1)</td></tr><tr><td data-label="Urutan">10</td><td data-label="Topik Grammar">Modal Verbs (deduction, obligation, advice, past modals)</td><td data-label="Bulan">5</td><td data-label="Alasan Urutan">Sering di speaking opinion &amp; writing formal</td></tr><tr><td data-label="Urutan">11</td><td data-label="Topik Grammar">Gerund vs Infinitive</td><td data-label="Bulan">6</td><td data-label="Alasan Urutan">Detail yang sering salah di level lanjut</td></tr><tr><td data-label="Urutan">12</td><td data-label="Topik Grammar">Reduced Clause (participle phrase)</td><td data-label="Bulan">6</td><td data-label="Alasan Urutan">Butuh clause dasar (langkah 5–8) sudah matang</td></tr><tr><td data-label="Urutan">13</td><td data-label="Topik Grammar">Inversion (negative adverbial, conditional inversion)</td><td data-label="Bulan">7</td><td data-label="Alasan Urutan">Advanced structure, sering di TOEFL tricky items</td></tr><tr><td data-label="Urutan">14</td><td data-label="Topik Grammar">Parallel Structure &amp; Comparative/Superlative lanjutan</td><td data-label="Bulan">7</td><td data-label="Alasan Urutan">Sering jadi jebakan di Written Expression</td></tr><tr><td data-label="Urutan">15</td><td data-label="Topik Grammar">Advanced Sentence Structure (compound-complex, cleft sentence)</td><td data-label="Bulan">8</td><td data-label="Alasan Urutan">Menggabungkan semua clause sebelumnya</td></tr><tr><td data-label="Urutan">16</td><td data-label="Topik Grammar">Academic Grammar (nominalization, hedging, formal register)</td><td data-label="Bulan">8–9</td><td data-label="Alasan Urutan">Level tertinggi, untuk jurnal &amp; laporan formal</td></tr><tr><td data-label="Urutan">17</td><td data-label="Topik Grammar">Full Integration Review (semua topik dicampur random)</td><td data-label="Bulan">9–12</td><td data-label="Alasan Urutan">Interleaved practice untuk retensi jangka panjang</td></tr></tbody></table></div>
+<p><strong>Cara belajar tiap topik (siklus 1 minggu per topik utama):</strong></p>
+<ol class="styled-list">
+<li><strong>Hari 1–2:</strong> Pahami konsep + contoh (grammar book/video) → catat pola.</li>
+<li><strong>Hari 3:</strong> Latihan soal (50 soal minimal) + cek jawaban, analisis kesalahan.</li>
+<li><strong>Hari 4:</strong> Gunakan pola tersebut dalam 10 kalimat sendiri (writing).</li>
+<li><strong>Hari 5:</strong> Gunakan pola tersebut secara lisan (speaking practice/AI roleplay).</li>
+<li><strong>Hari 6:</strong> Kuis campuran (topik minggu ini + topik minggu lalu) → interleaving.</li>
+</ol>
+  </div>
+</section>
+
+<section id="sec-vocab" class="content-section">
+  <div class="section-head">
+    <span class="section-num">3</span>
+    <h2>Sistem Vocabulary</h2>
+  </div>
+  <div class="section-body">
+    <p><strong>Metode:</strong> Spaced Repetition (Anki, interval 1-3-7-14-30 hari) + Active Recall (buat kalimat sendiri, bukan hanya hafal arti) + Contextual Learning (belajar dalam kalimat/konteks, bukan list terisolasi).</p>
+<p><strong>Target progresif:</strong></p>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Bulan</th><th>Kata Baru/Minggu</th><th>Kata Baru/Bulan</th><th>Kumulatif</th><th>Tema Fokus</th></tr></thead><tbody><tr><td data-label="Bulan">1</td><td data-label="Kata Baru/Minggu">100</td><td data-label="Kata Baru/Bulan">600</td><td data-label="Kumulatif">600</td><td data-label="Tema Fokus">Daily Life, Family, Basic Academic</td></tr><tr><td data-label="Bulan">2</td><td data-label="Kata Baru/Minggu">120</td><td data-label="Kata Baru/Bulan">720</td><td data-label="Kumulatif">1.320</td><td data-label="Tema Fokus">Education, Travel, Basic Emotion</td></tr><tr><td data-label="Bulan">3</td><td data-label="Kata Baru/Minggu">130</td><td data-label="Kata Baru/Bulan">780</td><td data-label="Kumulatif">2.100</td><td data-label="Tema Fokus">Business Basic, Technology Basic</td></tr><tr><td data-label="Bulan">4</td><td data-label="Kata Baru/Minggu">150</td><td data-label="Kata Baru/Bulan">900</td><td data-label="Kumulatif">3.000</td><td data-label="Tema Fokus">Programming Basic 1 (variabel, function, loop, dsb), TOEFL Vocab Batch 1</td></tr><tr><td data-label="Bulan">5</td><td data-label="Kata Baru/Minggu">150</td><td data-label="Kata Baru/Bulan">900</td><td data-label="Kumulatif">3.900</td><td data-label="Tema Fokus">Programming Basic 2 (API, database, framework), Science</td></tr><tr><td data-label="Bulan">6</td><td data-label="Kata Baru/Minggu">150</td><td data-label="Kata Baru/Bulan">900</td><td data-label="Kumulatif">4.800</td><td data-label="Tema Fokus">Economy, Health, TOEFL Vocab Batch 2</td></tr><tr><td data-label="Bulan">7</td><td data-label="Kata Baru/Minggu">150</td><td data-label="Kata Baru/Bulan">900</td><td data-label="Kumulatif">5.700</td><td data-label="Tema Fokus">AWL Batch 1 (570 kata Academic Word List, ~sublist 1-5), Politics</td></tr><tr><td data-label="Bulan">8</td><td data-label="Kata Baru/Minggu">150</td><td data-label="Kata Baru/Bulan">900</td><td data-label="Kumulatif">6.600</td><td data-label="Tema Fokus">AWL Batch 2 (sublist 6-10), Idioms &amp; Collocation set 1</td></tr><tr><td data-label="Bulan">9</td><td data-label="Kata Baru/Minggu">120</td><td data-label="Kata Baru/Bulan">720</td><td data-label="Kumulatif">7.320</td><td data-label="Tema Fokus">Phrasal Verb (300 paling umum), Synonym/Antonym pairs</td></tr><tr><td data-label="Bulan">10</td><td data-label="Kata Baru/Minggu">100</td><td data-label="Kata Baru/Bulan">600</td><td data-label="Kumulatif">7.920</td><td data-label="Tema Fokus">TOEFL High-Frequency Vocab (khusus soal ITP)</td></tr><tr><td data-label="Bulan">11</td><td data-label="Kata Baru/Minggu">80</td><td data-label="Kata Baru/Bulan">480</td><td data-label="Kumulatif">8.400</td><td data-label="Tema Fokus">Advanced Tech/Academic (DevOps, cloud, research terms)</td></tr><tr><td data-label="Bulan">12</td><td data-label="Kata Baru/Minggu">60</td><td data-label="Kata Baru/Bulan">360</td><td data-label="Kumulatif"><strong>8.760</strong></td><td data-label="Tema Fokus">Review total + gap filling</td></tr></tbody></table></div>
+<p><strong>Breakdown tema lengkap (dipelajari paralel sepanjang tahun, bukan hanya 1 bulan):</strong></p>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Tema</th><th>Contoh Fokus</th><th>Kapan Diperdalam</th></tr></thead><tbody><tr><td data-label="Tema">Daily Life</td><td data-label="Contoh Fokus">rutinitas, rumah, makanan, keluarga</td><td data-label="Kapan Diperdalam">Bulan 1</td></tr><tr><td data-label="Tema">Education</td><td data-label="Contoh Fokus">kampus, ujian, skill, akademik dasar</td><td data-label="Kapan Diperdalam">Bulan 2</td></tr><tr><td data-label="Tema">Travel</td><td data-label="Contoh Fokus">transportasi, hotel, imigrasi</td><td data-label="Kapan Diperdalam">Bulan 2</td></tr><tr><td data-label="Tema">Business</td><td data-label="Contoh Fokus">meeting, negosiasi, email formal</td><td data-label="Kapan Diperdalam">Bulan 3, 9</td></tr><tr><td data-label="Tema">Technology (umum)</td><td data-label="Contoh Fokus">device, software, internet, cybersecurity</td><td data-label="Kapan Diperdalam">Bulan 3–4</td></tr><tr><td data-label="Tema">Programming</td><td data-label="Contoh Fokus">variable, function, API, database, debugging, deployment, framework, algorithm, Git</td><td data-label="Kapan Diperdalam">Bulan 4–5, 11</td></tr><tr><td data-label="Tema">Health</td><td data-label="Contoh Fokus">penyakit, olahraga, mental health</td><td data-label="Kapan Diperdalam">Bulan 6</td></tr><tr><td data-label="Tema">Economy</td><td data-label="Contoh Fokus">inflasi, investasi, market, trade</td><td data-label="Kapan Diperdalam">Bulan 6</td></tr><tr><td data-label="Tema">Politics</td><td data-label="Contoh Fokus">kebijakan, pemilu, pemerintahan</td><td data-label="Kapan Diperdalam">Bulan 7</td></tr><tr><td data-label="Tema">Science</td><td data-label="Contoh Fokus">penelitian, eksperimen, data, hipotesis</td><td data-label="Kapan Diperdalam">Bulan 5, 7</td></tr><tr><td data-label="Tema">Academic (umum)</td><td data-label="Contoh Fokus">analyze, evaluate, significant, hypothesis</td><td data-label="Kapan Diperdalam">Bulan 7–8</td></tr><tr><td data-label="Tema">TOEFL Vocabulary</td><td data-label="Contoh Fokus">kata-kata frekuensi tinggi soal ITP (Barron's list)</td><td data-label="Kapan Diperdalam">Bulan 4, 6, 10</td></tr><tr><td data-label="Tema">Idioms</td><td data-label="Contoh Fokus">"break the ice", "hit the ground running"</td><td data-label="Kapan Diperdalam">Bulan 8</td></tr><tr><td data-label="Tema">Collocation</td><td data-label="Contoh Fokus">"make a decision", "heavy rain", "strong coffee"</td><td data-label="Kapan Diperdalam">Bulan 8</td></tr><tr><td data-label="Tema">Phrasal Verb</td><td data-label="Contoh Fokus">"figure out", "look into", "come up with"</td><td data-label="Kapan Diperdalam">Bulan 9</td></tr><tr><td data-label="Tema">Synonym/Antonym</td><td data-label="Contoh Fokus">untuk TOEFL Reading &amp; Vocabulary in context</td><td data-label="Kapan Diperdalam">Bulan 9</td></tr><tr><td data-label="Tema">Academic Word List (AWL)</td><td data-label="Contoh Fokus">570 kata, 10 sublist (Coxhead, 2000)</td><td data-label="Kapan Diperdalam">Bulan 7–8</td></tr></tbody></table></div>
+<p><strong>Rutinitas SRS harian:</strong> 20–30 menit review kartu lama (pagi) + 15 menit input kata baru (pagi) + 1 kalimat pakai kata baru secara lisan (malam).</p>
+  </div>
+</section>
+
+<section id="sec-skills" class="content-section">
+  <div class="section-head">
+    <span class="section-num">4</span>
+    <h2>Progresi Skill</h2>
+  </div>
+  <div class="section-body">
+    <h3 class="sub-h3">🗣️ SPEAKING — Target akhir: 30–60 menit ngobrol lancar</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Bulan</th><th>Jenis Latihan</th><th>Durasi/Hari</th><th>Fokus</th></tr></thead><tbody><tr><td data-label="Bulan">1–2</td><td data-label="Jenis Latihan">Shadowing + Imitation (audio pendek)</td><td data-label="Durasi/Hari">15–20 menit</td><td data-label="Fokus">Rhythm &amp; basic fluency</td></tr><tr><td data-label="Bulan">2–3</td><td data-label="Jenis Latihan">Picture Description, Storytelling</td><td data-label="Durasi/Hari">15–20 menit</td><td data-label="Fokus">Membangun kalimat spontan</td></tr><tr><td data-label="Bulan">3–4</td><td data-label="Jenis Latihan">Retelling (dari artikel/video pendek)</td><td data-label="Durasi/Hari">20 menit</td><td data-label="Fokus">Parafrase &amp; struktur</td></tr><tr><td data-label="Bulan">4–5</td><td data-label="Jenis Latihan">Opinion Speaking (topik harian)</td><td data-label="Durasi/Hari">20 menit</td><td data-label="Fokus">Fluency + argument dasar</td></tr><tr><td data-label="Bulan">5–6</td><td data-label="Jenis Latihan">Role Play (customer service, meeting kecil)</td><td data-label="Durasi/Hari">20–25 menit</td><td data-label="Fokus">Konteks profesional</td></tr><tr><td data-label="Bulan">6–7</td><td data-label="Jenis Latihan">Discussion dengan AI (2 arah)</td><td data-label="Durasi/Hari">25 menit</td><td data-label="Fokus">Spontanitas &amp; listening-speaking loop</td></tr><tr><td data-label="Bulan">7–8</td><td data-label="Jenis Latihan">Presentation (topik teknis IT)</td><td data-label="Durasi/Hari">25–30 menit</td><td data-label="Fokus">Structured monologue</td></tr><tr><td data-label="Bulan">8–9</td><td data-label="Jenis Latihan">Debate (pro-kontra)</td><td data-label="Durasi/Hari">25–30 menit</td><td data-label="Fokus">Argumentasi cepat</td></tr><tr><td data-label="Bulan">9–10</td><td data-label="Jenis Latihan">Interview Practice (kerja IT)</td><td data-label="Durasi/Hari">30 menit</td><td data-label="Fokus">Formal register, STAR method</td></tr><tr><td data-label="Bulan">10–11</td><td data-label="Jenis Latihan">Speaking TOEFL (task-based, walau ITP fokus reading/listening/structure)</td><td data-label="Durasi/Hari">20 menit</td><td data-label="Fokus">Struktur jawaban cepat</td></tr><tr><td data-label="Bulan">11–12</td><td data-label="Jenis Latihan">Thinking in English (self-talk, narrate aktivitas)</td><td data-label="Durasi/Hari">Sepanjang hari (pasif) + 15 menit aktif</td><td data-label="Fokus">Automaticity</td></tr></tbody></table></div>
+<div class="callout">
+<p><strong>Prinsip:</strong> setiap hari WAJIB ada output lisan minimal 15 menit — tidak boleh skip meski sedang fokus grammar/TOEFL.</p>
+</div>
+<h3 class="sub-h3">🎧 LISTENING — Target akhir: paham film/podcast/meeting tanpa subtitle</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Tahap</th><th>Sumber</th><th>Level</th><th>Bulan</th><th>Durasi/Hari</th></tr></thead><tbody><tr><td data-label="Tahap">1</td><td data-label="Sumber">VOA Learning English (Special English)</td><td data-label="Level">A2-B1</td><td data-label="Bulan">1–2</td><td data-label="Durasi/Hari">20 menit</td></tr><tr><td data-label="Tahap">2</td><td data-label="Sumber">BBC Learning English (6 Minute English)</td><td data-label="Level">B1</td><td data-label="Bulan">2–3</td><td data-label="Durasi/Hari">20 menit</td></tr><tr><td data-label="Tahap">3</td><td data-label="Sumber">ESL Podcast / Luke's English Podcast</td><td data-label="Level">B1-B2</td><td data-label="Bulan">3–4</td><td data-label="Durasi/Hari">25 menit</td></tr><tr><td data-label="Tahap">4</td><td data-label="Sumber">TED Talks (subtitle EN dulu, lalu tanpa)</td><td data-label="Level">B2</td><td data-label="Bulan">4–6</td><td data-label="Durasi/Hari">25–30 menit</td></tr><tr><td data-label="Tahap">5</td><td data-label="Sumber">YouTube tech channels (Fireship, freeCodeCamp)</td><td data-label="Level">B2</td><td data-label="Bulan">5–7</td><td data-label="Durasi/Hari">25–30 menit</td></tr><tr><td data-label="Tahap">6</td><td data-label="Sumber">Spotify Podcast (Lex Fridman ringan, Syntax.fm)</td><td data-label="Level">B2-C1</td><td data-label="Bulan">6–8</td><td data-label="Durasi/Hari">30 menit</td></tr><tr><td data-label="Tahap">7</td><td data-label="Sumber">CNN 10 / NPR News</td><td data-label="Level">B2-C1</td><td data-label="Bulan">7–9</td><td data-label="Durasi/Hari">20–25 menit</td></tr><tr><td data-label="Tahap">8</td><td data-label="Sumber">Documentary (BBC/Netflix)</td><td data-label="Level">C1</td><td data-label="Bulan">8–10</td><td data-label="Durasi/Hari">30–40 menit</td></tr><tr><td data-label="Tahap">9</td><td data-label="Sumber">Series tanpa subtitle (pilih genre disukai)</td><td data-label="Level">C1</td><td data-label="Bulan">9–11</td><td data-label="Durasi/Hari">30–40 menit</td></tr><tr><td data-label="Tahap">10</td><td data-label="Sumber">Movie tanpa subtitle</td><td data-label="Level">C1</td><td data-label="Bulan">10–12</td><td data-label="Durasi/Hari">40–60 menit (weekend)</td></tr><tr><td data-label="Tahap">11</td><td data-label="Sumber">Native Conversation (podcast santai, unscripted)</td><td data-label="Level">C1</td><td data-label="Bulan">11–12</td><td data-label="Durasi/Hari">30 menit</td></tr><tr><td data-label="Tahap">12</td><td data-label="Sumber">Real Meeting/Webinar internasional (rekaman)</td><td data-label="Level">C1</td><td data-label="Bulan">12</td><td data-label="Durasi/Hari">30–40 menit</td></tr></tbody></table></div>
+<h3 class="sub-h3">📖 READING — Target akhir: jurnal, dokumentasi teknis, novel dengan nyaman</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Tahap</th><th>Jenis Materi</th><th>Bulan</th><th>Target Halaman/Minggu</th></tr></thead><tbody><tr><td data-label="Tahap">1</td><td data-label="Jenis Materi">News (BBC/VOA Learning English articles)</td><td data-label="Bulan">1–2</td><td data-label="Target Halaman/Minggu">10–15 hal</td></tr><tr><td data-label="Tahap">2</td><td data-label="Jenis Materi">Short Story (graded reader B1)</td><td data-label="Bulan">2–3</td><td data-label="Target Halaman/Minggu">15–20 hal</td></tr><tr><td data-label="Tahap">3</td><td data-label="Jenis Materi">Blog (Medium tech blog ringan)</td><td data-label="Bulan">3–4</td><td data-label="Target Halaman/Minggu">15–20 hal</td></tr><tr><td data-label="Tahap">4</td><td data-label="Jenis Materi">Programming Documentation (MDN, official docs)</td><td data-label="Bulan">4–6</td><td data-label="Target Halaman/Minggu">10–15 hal (dense)</td></tr><tr><td data-label="Tahap">5</td><td data-label="Jenis Materi">Scientific/Popular Science Article</td><td data-label="Bulan">6–7</td><td data-label="Target Halaman/Minggu">15 hal</td></tr><tr><td data-label="Tahap">6</td><td data-label="Jenis Materi">Research Paper Abstract + Intro (arXiv, ringan)</td><td data-label="Bulan">7–9</td><td data-label="Target Halaman/Minggu">8–10 hal</td></tr><tr><td data-label="Tahap">7</td><td data-label="Jenis Materi">Novel (pilihan pribadi, B2-C1)</td><td data-label="Bulan">8–12</td><td data-label="Target Halaman/Minggu">25–30 hal</td></tr><tr><td data-label="Tahap">8</td><td data-label="Jenis Materi">Academic Journal (full paper, bidang IT/CS)</td><td data-label="Bulan">9–12</td><td data-label="Target Halaman/Minggu">10–12 hal</td></tr></tbody></table></div>
+<h3 class="sub-h3">✍️ WRITING — Target akhir: email profesional, laporan, esai</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Bulan</th><th>Jenis Latihan</th><th>Frekuensi</th></tr></thead><tbody><tr><td data-label="Bulan">1</td><td data-label="Jenis Latihan">Sentence-level accuracy drills</td><td data-label="Frekuensi">Harian (10 kalimat)</td></tr><tr><td data-label="Bulan">2</td><td data-label="Jenis Latihan">Paragraph writing (5 kalimat, 1 topik)</td><td data-label="Frekuensi">4x/minggu</td></tr><tr><td data-label="Bulan">3</td><td data-label="Jenis Latihan">Summary Writing (ringkas artikel 300 kata → 100 kata)</td><td data-label="Frekuensi">3x/minggu</td></tr><tr><td data-label="Bulan">4</td><td data-label="Jenis Latihan">Email (informal → semi-formal)</td><td data-label="Frekuensi">3x/minggu</td></tr><tr><td data-label="Bulan">5</td><td data-label="Jenis Latihan">Business Email (formal, request, follow-up)</td><td data-label="Frekuensi">3x/minggu</td></tr><tr><td data-label="Bulan">6</td><td data-label="Jenis Latihan">Opinion Essay (5 paragraf)</td><td data-label="Frekuensi">2x/minggu</td></tr><tr><td data-label="Bulan">7</td><td data-label="Jenis Latihan">Technical Writing (jelaskan kode/proses teknis)</td><td data-label="Frekuensi">2x/minggu</td></tr><tr><td data-label="Bulan">8</td><td data-label="Jenis Latihan">TOEFL Writing pattern (walau ITP tak ada writing test, tetap dilatih untuk skill umum &amp; interview)</td><td data-label="Frekuensi">2x/minggu</td></tr><tr><td data-label="Bulan">9–12</td><td data-label="Jenis Latihan">Journal Writing harian + Daily Diary (refleksi belajar)</td><td data-label="Frekuensi">Harian (10–15 menit)</td></tr></tbody></table></div>
+<h3 class="sub-h3">🔊 PRONUNCIATION — American Accent (default), British opsional</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Bulan</th><th>Fokus</th><th>Latihan</th></tr></thead><tbody><tr><td data-label="Bulan">1–2</td><td data-label="Fokus">IPA dasar (vowel &amp; consonant chart)</td><td data-label="Latihan">10 menit/hari</td></tr><tr><td data-label="Bulan">2–3</td><td data-label="Fokus">Minimal Pairs (ship/sheep, bit/beat)</td><td data-label="Latihan">10 menit/hari</td></tr><tr><td data-label="Bulan">3–4</td><td data-label="Fokus">Word Stress &amp; Sentence Stress</td><td data-label="Latihan">15 menit/hari</td></tr><tr><td data-label="Bulan">4–5</td><td data-label="Fokus">Intonation (rising/falling)</td><td data-label="Latihan">15 menit/hari</td></tr><tr><td data-label="Bulan">5–7</td><td data-label="Fokus">Connected Speech (linking, elision)</td><td data-label="Latihan">15 menit/hari</td></tr><tr><td data-label="Bulan">6–12</td><td data-label="Fokus">Shadowing intensif (native audio, kalimat per kalimat)</td><td data-label="Latihan">20 menit/hari</td></tr><tr><td data-label="Bulan">8–12</td><td data-label="Fokus">Reduction (gonna, wanna, kinda) &amp; natural rhythm</td><td data-label="Latihan">10 menit/hari</td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section id="sec-toefl" class="content-section">
+  <div class="section-head">
+    <span class="section-num">5</span>
+    <h2>Roadmap TOEFL ITP</h2>
+  </div>
+  <div class="section-body">
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Bulan</th><th>Skor Target</th><th>Fokus Listening</th><th>Fokus Structure/WE</th><th>Fokus Reading</th><th>Aktivitas Khusus</th></tr></thead><tbody><tr><td data-label="Bulan">1</td><td data-label="Skor Target">450</td><td data-label="Fokus Listening">Basic dialogue comprehension</td><td data-label="Fokus Structure/WE">Tenses &amp; sentence pattern</td><td data-label="Fokus Reading">Skimming/scanning dasar</td><td data-label="Aktivitas Khusus">Diagnostic test (awal)</td></tr><tr><td data-label="Bulan">2</td><td data-label="Skor Target">470</td><td data-label="Fokus Listening">Short conversation &amp; statement</td><td data-label="Fokus Structure/WE">Passive &amp; reported speech</td><td data-label="Fokus Reading">Main idea questions</td><td data-label="Aktivitas Khusus">Vocabulary drill harian</td></tr><tr><td data-label="Bulan">3</td><td data-label="Skor Target">490</td><td data-label="Fokus Listening">Longer conversation</td><td data-label="Fokus Structure/WE">Relative clause errors</td><td data-label="Fokus Reading">Detail &amp; inference</td><td data-label="Aktivitas Khusus">Prediction test #1</td></tr><tr><td data-label="Bulan">4</td><td data-label="Skor Target">500</td><td data-label="Fokus Listening">Academic mini-talk</td><td data-label="Fokus Structure/WE">Noun &amp; adverb clause</td><td data-label="Fokus Reading">Vocabulary in context</td><td data-label="Aktivitas Khusus"><strong>Mock Test #1 (full)</strong></td></tr><tr><td data-label="Bulan">5</td><td data-label="Skor Target">510</td><td data-label="Fokus Listening">Lecture-style listening</td><td data-label="Fokus Structure/WE">Conditional &amp; modal errors</td><td data-label="Fokus Reading">Reference &amp; purpose questions</td><td data-label="Aktivitas Khusus">Error Analysis Log dimulai</td></tr><tr><td data-label="Bulan">6</td><td data-label="Skor Target">520</td><td data-label="Fokus Listening">Note-taking practice</td><td data-label="Fokus Structure/WE">Gerund/infinitive errors</td><td data-label="Fokus Reading">Paragraph organization</td><td data-label="Aktivitas Khusus"><strong>Quarterly Simulation #1</strong></td></tr><tr><td data-label="Bulan">7</td><td data-label="Skor Target">525</td><td data-label="Fokus Listening">Fast native speech</td><td data-label="Fokus Structure/WE">Inversion &amp; parallel structure</td><td data-label="Fokus Reading">Timing strategy (speed reading)</td><td data-label="Aktivitas Khusus">Prediction test #2</td></tr><tr><td data-label="Bulan">8</td><td data-label="Skor Target">535</td><td data-label="Fokus Listening">Distractor recognition</td><td data-label="Fokus Structure/WE">Advanced sentence structure</td><td data-label="Fokus Reading">Long passage stamina</td><td data-label="Aktivitas Khusus">Mock Test #2</td></tr><tr><td data-label="Bulan">9</td><td data-label="Skor Target">545</td><td data-label="Fokus Listening">Full-length listening sets</td><td data-label="Fokus Structure/WE">Academic grammar review</td><td data-label="Fokus Reading">Mixed practice sets</td><td data-label="Aktivitas Khusus">Weak-area drilling</td></tr><tr><td data-label="Bulan">10</td><td data-label="Skor Target">550</td><td data-label="Fokus Listening">Timed listening section</td><td data-label="Fokus Structure/WE">Timed structure section</td><td data-label="Fokus Reading">Timed reading section</td><td data-label="Aktivitas Khusus"><strong>Quarterly Simulation #2 (full mock)</strong></td></tr><tr><td data-label="Bulan">11</td><td data-label="Skor Target">555</td><td data-label="Fokus Listening">Full section under time pressure</td><td data-label="Fokus Structure/WE">Full section under time pressure</td><td data-label="Fokus Reading">Full section under time pressure</td><td data-label="Aktivitas Khusus">Mock test 1x/minggu</td></tr><tr><td data-label="Bulan">12</td><td data-label="Skor Target">560+</td><td data-label="Fokus Listening">Final polishing</td><td data-label="Fokus Structure/WE">Final polishing</td><td data-label="Fokus Reading">Final polishing</td><td data-label="Aktivitas Khusus"><strong>Real Test</strong> + 2x full mock/minggu</td></tr></tbody></table></div>
+<p><strong>Struktur latihan mingguan TOEFL (mulai bulan 3):</strong></p>
+<ul class="styled-list">
+<li>2x sesi Listening Section (per section: ±35 menit, 50 soal simulasi)</li>
+<li>2x sesi Structure &amp; Written Expression (25 menit, 40 soal)</li>
+<li>2x sesi Reading Comprehension (55 menit, 50 soal)</li>
+<li>1x Error Analysis Session (review semua soal salah minggu ini → kategori kesalahan → grammar/vocab yang perlu direview)</li>
+</ul>
+<p><strong>Rekomendasi jumlah full mock test:</strong> Bulan 4, 6, 8, 10, 11, 12 (minimal 6x full mock sepanjang tahun, ditambah practice test mingguan sejak bulan 3).</p>
+  </div>
+</section>
+
+<section id="sec-routine" class="content-section">
+  <div class="section-head">
+    <span class="section-num">6</span>
+    <h2>Rutinitas Harian</h2>
+  </div>
+  <div class="section-body">
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Waktu</th><th>Aktivitas</th><th>Durasi</th><th>Skill</th></tr></thead><tbody><tr><td data-label="Waktu"><strong>🌅 Pagi</strong></td><td data-label="Aktivitas">Review Flashcard SRS (Anki)</td><td data-label="Durasi">20 menit</td><td data-label="Skill">Vocabulary</td></tr><tr><td data-label="Waktu"></td><td data-label="Aktivitas">Grammar concept + latihan soal</td><td data-label="Durasi">25 menit</td><td data-label="Skill">Grammar</td></tr><tr><td data-label="Waktu"></td><td data-label="Aktivitas">Listening (podcast/video sesuai tahap)</td><td data-label="Durasi">25 menit</td><td data-label="Skill">Listening</td></tr><tr><td data-label="Waktu"><strong>☀️ Siang/Sore</strong></td><td data-label="Aktivitas">Reading (artikel/dokumentasi sesuai tahap)</td><td data-label="Durasi">30 menit</td><td data-label="Skill">Reading</td></tr><tr><td data-label="Waktu"></td><td data-label="Aktivitas">Speaking practice (shadowing/AI roleplay/dsb)</td><td data-label="Durasi">25 menit</td><td data-label="Skill">Speaking + Pronunciation</td></tr><tr><td data-label="Waktu"><strong>🌙 Malam</strong></td><td data-label="Aktivitas">Writing (jurnal/email/essay sesuai tahap)</td><td data-label="Durasi">20 menit</td><td data-label="Skill">Writing</td></tr><tr><td data-label="Waktu"></td><td data-label="Aktivitas">Review harian + input 10 kata baru ke SRS</td><td data-label="Durasi">15 menit</td><td data-label="Skill">Vocabulary + Review</td></tr><tr><td data-label="Waktu"></td><td data-label="Aktivitas"><strong>Total</strong></td><td data-label="Durasi"><strong>~2 jam 40 menit</strong></td><td data-label="Skill">Semua skill (interleaved)</td></tr></tbody></table></div>
+<div class="callout">
+<p>Hari ke-7 = <strong>Rest/Light Review Day</strong> (opsional: nonton film/YouTube santai berbahasa Inggris tanpa target, murni for fun — tetap exposure tapi tanpa tekanan).</p>
+</div>
+<p><strong>Alokasi mingguan tambahan (masuk ke slot di atas secara rotasi):</strong></p>
+<ul class="styled-list">
+<li>2x/minggu: sesi TOEFL practice (menggantikan slot reading+grammar, durasi 60–90 menit)</li>
+<li>1x/minggu: Mock Speaking Interview / Presentation (menggantikan slot speaking, durasi 30–40 menit)</li>
+<li>1x/minggu: Weekly Review &amp; Self-Test (menggantikan seluruh slot malam)</li>
+</ul>
+  </div>
+</section>
+
+<section id="sec-weekly" class="content-section">
+  <div class="section-head">
+    <span class="section-num">7</span>
+    <h2>Template Mingguan</h2>
+  </div>
+  <div class="section-body">
+    <p>Karena 12 bulan × 4 minggu × 6 hari = <strong>288 hari</strong>, tidak efisien (dan tidak berguna) menuliskan 288 hari satu per satu dengan konten unik semua — pendekatan terbaik (dan yang dipakai kurikulum universitas/bootcamp asli) adalah: <strong>1 template harian yang konsisten strukturnya, dengan KONTEN yang berubah tiap minggu sesuai tabel Bagian 4, 5, 9.</strong></p>
+<h3 class="sub-h3">Struktur Template Harian (Day 1–6, berulang tiap minggu):</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Hari</th><th>Fokus Utama</th><th>Fokus Sekunder</th><th>Latihan Speaking Spesifik</th></tr></thead><tbody><tr><td data-label="Hari"><strong>Day 1</strong></td><td data-label="Fokus Utama">Grammar (konsep baru) + Vocabulary baru</td><td data-label="Fokus Sekunder">Listening ringan</td><td data-label="Latihan Speaking Spesifik">Shadowing</td></tr><tr><td data-label="Hari"><strong>Day 2</strong></td><td data-label="Fokus Utama">Grammar (latihan soal) + Vocabulary review</td><td data-label="Fokus Sekunder">Reading</td><td data-label="Latihan Speaking Spesifik">Retelling isi reading</td></tr><tr><td data-label="Hari"><strong>Day 3</strong></td><td data-label="Fokus Utama">Listening (tahap sesuai bulan)</td><td data-label="Fokus Sekunder">Vocabulary dalam konteks</td><td data-label="Latihan Speaking Spesifik">Picture Description / Storytelling</td></tr><tr><td data-label="Hari"><strong>Day 4</strong></td><td data-label="Fokus Utama">Reading (tahap sesuai bulan)</td><td data-label="Fokus Sekunder">Grammar aplikasi (nulis 10 kalimat)</td><td data-label="Latihan Speaking Spesifik">Opinion Speaking</td></tr><tr><td data-label="Hari"><strong>Day 5</strong></td><td data-label="Fokus Utama">Writing (jenis sesuai bulan)</td><td data-label="Fokus Sekunder">Pronunciation drill</td><td data-label="Latihan Speaking Spesifik">Role Play / Discussion</td></tr><tr><td data-label="Hari"><strong>Day 6</strong></td><td data-label="Fokus Utama"><strong>TOEFL Practice Session</strong> (mulai bulan 3) / Kuis campuran (bulan 1–2)</td><td data-label="Fokus Sekunder">Error Analysis</td><td data-label="Latihan Speaking Spesifik">Presentation / Debate (bergantian)</td></tr><tr><td data-label="Hari">*Day 7*</td><td data-label="Fokus Utama">*Rest &amp; Light Exposure (film/YouTube santai)*</td><td data-label="Fokus Sekunder">—</td><td data-label="Latihan Speaking Spesifik">—</td></tr></tbody></table></div>
+<p>Gunakan template ini bersama tabel <strong>Bagian 4 (progresi skill)</strong>, <strong>Bagian 5 (TOEFL)</strong>, dan <strong>Bagian 9 (matriks bulanan)</strong> untuk mengisi konten spesifik tiap minggu. Contoh penerapan lengkap untuk Bulan 1 ada di Bagian 8.</p>
+  </div>
+</section>
+
+<section id="sec-month1" class="content-section">
+  <div class="section-head">
+    <span class="section-num">8</span>
+    <h2>Detail Bulan 1</h2>
+  </div>
+  <div class="section-body">
+    <h3 id="month-1" class="sub-h3">📅 MONTH 1 — Foundation Rebuild | Target TOEFL: 450 | Vocab: 600 kata (Daily Life &amp; Basic Academic)</h3>
+<details class="month-card" open>
+<summary>WEEK 1 — Diagnostic &amp; Tenses Review</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Hari</th><th>Grammar</th><th>Vocabulary (15-20 kata/hari)</th><th>Listening</th><th>Reading</th><th>Speaking</th><th>Writing</th></tr></thead><tbody><tr><td data-label="Hari"><strong>Day 1</strong></td><td data-label="Grammar">Diagnostic test grammar (self-assess) + Simple Present/Past review</td><td data-label="Vocabulary (15-20 kata/hari)">Tema: Rutinitas harian</td><td data-label="Listening">VOA Learning English 15 menit (topik ringan)</td><td data-label="Reading">Artikel VOA 1 halaman</td><td data-label="Speaking">Shadowing audio VOA 10 menit</td><td data-label="Writing">Tulis 5 kalimat rutinitas harian</td></tr><tr><td data-label="Hari"><strong>Day 2</strong></td><td data-label="Grammar">Present/Past Continuous</td><td data-label="Vocabulary (15-20 kata/hari)">Tema: Aktivitas &amp; waktu</td><td data-label="Listening">VOA 15 menit + dengar ulang tanpa teks</td><td data-label="Reading">Baca ulang artikel Day 1, cari 10 kata baru</td><td data-label="Speaking">Retelling isi artikel (2 menit rekam)</td><td data-label="Writing">Perbaiki 5 kalimat Day 1 (grammar check via AI)</td></tr><tr><td data-label="Hari"><strong>Day 3</strong></td><td data-label="Grammar">Present Perfect vs Past Simple</td><td data-label="Vocabulary (15-20 kata/hari)">Tema: Pengalaman hidup</td><td data-label="Listening">Video YouTube "Learn English with..." 15 menit</td><td data-label="Reading">Short story graded reader (2 halaman)</td><td data-label="Speaking">Storytelling: "pengalaman minggu lalu" 2 menit</td><td data-label="Writing">Journal: 1 paragraf pengalaman</td></tr><tr><td data-label="Hari"><strong>Day 4</strong></td><td data-label="Grammar">Future forms (will/going to/present continuous)</td><td data-label="Vocabulary (15-20 kata/hari)">Tema: Rencana &amp; prediksi</td><td data-label="Listening">VOA 15 menit topik teknologi ringan</td><td data-label="Reading">Baca artikel tentang teknologi sederhana</td><td data-label="Speaking">Opinion speaking: "teknologi favorit" 2 menit</td><td data-label="Writing">Tulis email informal ke teman (rencana akhir pekan)</td></tr><tr><td data-label="Hari"><strong>Day 5</strong></td><td data-label="Grammar">Perfect Continuous (present &amp; past)</td><td data-label="Vocabulary (15-20 kata/hari)">Tema: Emosi &amp; sifat</td><td data-label="Listening">Podcast ESL pendek 15 menit</td><td data-label="Reading">Baca kembali email Day 4 milik sendiri, revisi</td><td data-label="Speaking">Role play sederhana: memesan makanan</td><td data-label="Writing">Diary: refleksi belajar minggu ini (5 kalimat)</td></tr><tr><td data-label="Hari"><strong>Day 6</strong></td><td data-label="Grammar">Kuis campuran semua tenses (30 soal)</td><td data-label="Vocabulary (15-20 kata/hari)">Review semua vocab minggu ini (SRS)</td><td data-label="Listening">Dengarkan 1 episode VOA &amp; jawab 5 pertanyaan pemahaman</td><td data-label="Reading">Baca 1 artikel baru, catat main idea</td><td data-label="Speaking">Presentasi mini 2 menit: "Diri saya &amp; tujuan belajar Inggris"</td><td data-label="Writing">Tulis ringkasan (summary) 1 artikel dalam 3 kalimat</td></tr><tr><td data-label="Hari">*Day 7*</td><td data-label="Grammar">*Rest — nonton video YouTube ringan berbahasa Inggris (santai)*</td><td data-label="Vocabulary (15-20 kata/hari)"></td><td data-label="Listening"></td><td data-label="Reading"></td><td data-label="Speaking"></td><td data-label="Writing"></td></tr></tbody></table></div>
+<p><strong>Target akhir Week 1:</strong> 100 kata baru masuk SRS, mampu bercerita rutinitas harian 2 menit tanpa banyak jeda.</p>
+</div></details>
+<details class="month-card">
+<summary>WEEK 2 — Sentence Pattern &amp; Parts of Speech</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Hari</th><th>Grammar</th><th>Vocabulary</th><th>Listening</th><th>Reading</th><th>Speaking</th><th>Writing</th></tr></thead><tbody><tr><td data-label="Hari">Day 1</td><td data-label="Grammar">Parts of speech review (noun, verb, adj, adv)</td><td data-label="Vocabulary">Tema: Keluarga &amp; rumah</td><td data-label="Listening">VOA 15-20 menit</td><td data-label="Reading">Artikel pendek + underline noun/verb</td><td data-label="Speaking">Shadowing</td><td data-label="Writing">5 kalimat pola S-V-O</td></tr><tr><td data-label="Hari">Day 2</td><td data-label="Grammar">Sentence pattern (SV, SVO, SVC, SVOO, SVOC)</td><td data-label="Vocabulary">Tema: Makanan &amp; kesehatan dasar</td><td data-label="Listening">BBC 6 Minute English #1</td><td data-label="Reading">Baca + identifikasi pola kalimat</td><td data-label="Speaking">Retelling</td><td data-label="Writing">Revisi kalimat Day 1</td></tr><tr><td data-label="Hari">Day 3</td><td data-label="Grammar">Adjective vs Adverb usage</td><td data-label="Vocabulary">Tema: Deskripsi orang/tempat</td><td data-label="Listening">BBC 6 Minute English #2</td><td data-label="Reading">Short story lanjutan</td><td data-label="Speaking">Picture description (foto random)</td><td data-label="Writing">Paragraf deskripsi tempat favorit</td></tr><tr><td data-label="Hari">Day 4</td><td data-label="Grammar">Preposition of time/place</td><td data-label="Vocabulary">Tema: Arah &amp; lokasi</td><td data-label="Listening">VOA topik travel</td><td data-label="Reading">Artikel travel pendek</td><td data-label="Speaking">Opinion: "tempat impian untuk dikunjungi"</td><td data-label="Writing">Email: tanya info liburan (informal)</td></tr><tr><td data-label="Hari">Day 5</td><td data-label="Grammar">Conjunction (and, but, so, because, although)</td><td data-label="Vocabulary">Tema: Alasan &amp; kontras</td><td data-label="Listening">Podcast ESL</td><td data-label="Reading">Baca &amp; analisis kalimat kompleks sederhana</td><td data-label="Speaking">Role play: tanya arah jalan</td><td data-label="Writing">Diary refleksi</td></tr><tr><td data-label="Hari">Day 6</td><td data-label="Grammar">Kuis campuran (tenses + sentence pattern)</td><td data-label="Vocabulary">Review SRS</td><td data-label="Listening">Listening comprehension test (10 soal)</td><td data-label="Reading">Reading comprehension test (10 soal)</td><td data-label="Speaking">Presentasi: "kota impian" 2-3 menit</td><td data-label="Writing">Summary artikel</td></tr><tr><td data-label="Hari">*Day 7*</td><td data-label="Grammar">*Rest*</td><td data-label="Vocabulary"></td><td data-label="Listening"></td><td data-label="Reading"></td><td data-label="Speaking"></td><td data-label="Writing"></td></tr></tbody></table></div>
+<p><strong>Target akhir Week 2:</strong> 100 kata baru (kumulatif 200), paham struktur kalimat dasar-menengah.</p>
+</div></details>
+<details class="month-card">
+<summary>WEEK 3 — Question Forms &amp; Negation + TOEFL Intro</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Hari</th><th>Grammar</th><th>Vocabulary</th><th>Listening</th><th>Reading</th><th>Speaking</th><th>Writing</th></tr></thead><tbody><tr><td data-label="Hari">Day 1</td><td data-label="Grammar">Yes/No &amp; WH-Questions</td><td data-label="Vocabulary">Tema: Pekerjaan &amp; profesi</td><td data-label="Listening">VOA</td><td data-label="Reading">Artikel pekerjaan</td><td data-label="Speaking">Shadowing</td><td data-label="Writing">Kalimat tanya (10 kalimat)</td></tr><tr><td data-label="Hari">Day 2</td><td data-label="Grammar">Tag Questions &amp; Negation patterns</td><td data-label="Vocabulary">Tema: Kebiasaan &amp; hobi</td><td data-label="Listening">BBC 6 Minute</td><td data-label="Reading">Baca artikel hobi</td><td data-label="Speaking">Retelling</td><td data-label="Writing">Revisi</td></tr><tr><td data-label="Hari">Day 3</td><td data-label="Grammar">Countable/Uncountable &amp; Quantifiers</td><td data-label="Vocabulary">Tema: Belanja &amp; angka</td><td data-label="Listening">VOA</td><td data-label="Reading">Short story</td><td data-label="Speaking">Storytelling: hobi</td><td data-label="Writing">Paragraf hobi</td></tr><tr><td data-label="Hari">Day 4</td><td data-label="Grammar">Introduction ke TOEFL format (kenali 3 section)</td><td data-label="Vocabulary">TOEFL Vocab batch 1 (20 kata)</td><td data-label="Listening">Contoh audio TOEFL section (easy)</td><td data-label="Reading">Contoh passage TOEFL (easy)</td><td data-label="Speaking">Opinion speaking</td><td data-label="Writing">Email formal sederhana</td></tr><tr><td data-label="Hari">Day 5</td><td data-label="Grammar">Latihan soal TOEFL Structure (level basic, 20 soal)</td><td data-label="Vocabulary">Review</td><td data-label="Listening">Contoh audio TOEFL lanjutan</td><td data-label="Reading">Contoh passage TOEFL</td><td data-label="Speaking">Role play interview kerja (basic Qs)</td><td data-label="Writing">Diary</td></tr><tr><td data-label="Hari">Day 6</td><td data-label="Grammar">Diagnostic TOEFL mini-test (Listening+Structure+Reading, versi pendek)</td><td data-label="Vocabulary">Review SRS</td><td data-label="Listening">—</td><td data-label="Reading">—</td><td data-label="Speaking">Presentasi: pekerjaan impian</td><td data-label="Writing">Summary</td></tr><tr><td data-label="Hari">*Day 7*</td><td data-label="Grammar">*Rest*</td><td data-label="Vocabulary"></td><td data-label="Listening"></td><td data-label="Reading"></td><td data-label="Speaking"></td><td data-label="Writing"></td></tr></tbody></table></div>
+<p><strong>Target akhir Week 3:</strong> 100 kata baru (kumulatif 300), familiar dengan format TOEFL.</p>
+</div></details>
+<details class="month-card">
+<summary>WEEK 4 — Review &amp; Consolidation + Monthly Assessment</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Hari</th><th>Grammar</th><th>Vocabulary</th><th>Listening</th><th>Reading</th><th>Speaking</th><th>Writing</th></tr></thead><tbody><tr><td data-label="Hari">Day 1</td><td data-label="Grammar">Review semua grammar Week 1-3 (mixed drill)</td><td data-label="Vocabulary">Tema: Teknologi dasar</td><td data-label="Listening">VOA topik tech</td><td data-label="Reading">Artikel tech dasar</td><td data-label="Speaking">Shadowing</td><td data-label="Writing">10 kalimat mixed grammar</td></tr><tr><td data-label="Hari">Day 2</td><td data-label="Grammar">Latihan soal campuran</td><td data-label="Vocabulary">Review</td><td data-label="Listening">BBC</td><td data-label="Reading">Baca artikel</td><td data-label="Speaking">Retelling</td><td data-label="Writing">Revisi</td></tr><tr><td data-label="Hari">Day 3</td><td data-label="Grammar">Error correction exercise (dari kesalahan sendiri sepanjang bulan)</td><td data-label="Vocabulary">Review</td><td data-label="Listening">Podcast</td><td data-label="Reading">Short story</td><td data-label="Speaking">Storytelling</td><td data-label="Writing">Paragraf</td></tr><tr><td data-label="Hari">Day 4</td><td data-label="Grammar">Latihan TOEFL Structure (40 soal timed)</td><td data-label="Vocabulary">TOEFL Vocab batch 2</td><td data-label="Listening">Audio TOEFL</td><td data-label="Reading">Passage TOEFL</td><td data-label="Speaking">Opinion speaking</td><td data-label="Writing">Email</td></tr><tr><td data-label="Hari">Day 5</td><td data-label="Grammar">Latihan TOEFL Listening + Reading (timed)</td><td data-label="Vocabulary">Review</td><td data-label="Listening">Full listening set</td><td data-label="Reading">Full reading set</td><td data-label="Speaking">Interview practice</td><td data-label="Writing">Diary</td></tr><tr><td data-label="Hari">Day 6</td><td data-label="Grammar"><strong>📊 MONTHLY ASSESSMENT: Full Mini Mock Test (Diagnostic #2)</strong></td><td data-label="Vocabulary">Vocab test (100 kata random)</td><td data-label="Listening">Test</td><td data-label="Reading">Test</td><td data-label="Speaking">Presentasi 3 menit: "progress belajar bulan ini"</td><td data-label="Writing">Self-reflection essay (150 kata)</td></tr><tr><td data-label="Hari">*Day 7*</td><td data-label="Grammar">*Rest &amp; Rayakan progress bulan 1!*</td><td data-label="Vocabulary"></td><td data-label="Listening"></td><td data-label="Reading"></td><td data-label="Speaking"></td><td data-label="Writing"></td></tr></tbody></table></div>
+<p><strong>🎯 Milestone Bulan 1:</strong> Skor mock test ≈ 450 | 600 kata aktif | Bisa cerita rutinitas 3 menit | Paham 70% audio level A2-B1.</p>
+<div class="callout">
+<p><strong>Bulan 2–12</strong> mengikuti struktur mingguan yang sama persis (Day 1–6 pattern di atas), dengan <strong>konten grammar, vocab tema, listening/reading tier, dan target TOEFL</strong> mengikuti tabel di <strong>Bagian 4, 5, dan 9</strong> di bawah. Setiap awal bulan, ganti "tema vocab" dan "topik grammar" sesuai matriks Bagian 9, dan tingkatkan level sumber listening/reading sesuai tabel Bagian 4.</p>
+</div>
+</div></details>
+  </div>
+</section>
+
+<section id="sec-matrix" class="content-section">
+  <div class="section-head">
+    <span class="section-num">9</span>
+    <h2>Matriks Bulan 2–12</h2>
+  </div>
+  <div class="section-body">
+    <div class="callout">
+<p>Gunakan template mingguan Bagian 7 (Day 1–6) untuk semua bulan. Tabel di bawah memberi "isi" tiap bulan: fokus grammar per minggu, tema vocab, listening/reading tier, dan milestone.</p>
+</div>
+<details class="month-card" id="month-2">
+<summary>📅 MONTH 2 — Tenses Mastery &amp; Basic Structure | TOEFL: 470 | Vocab kumulatif: 1.320</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Passive Voice (present &amp; past)</td><td data-label="Tema Vocab">Education</td><td data-label="Listening Tier">VOA → BBC 6 Min</td><td data-label="Reading Tier">News pendek</td><td data-label="Milestone">Bisa ubah kalimat aktif↔pasif</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Passive Voice (perfect &amp; modal)</td><td data-label="Tema Vocab">Education lanjutan</td><td data-label="Listening Tier">BBC 6 Min</td><td data-label="Reading Tier">Short story</td><td data-label="Milestone">Paham struktur pasif kompleks</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Reported Speech (statement)</td><td data-label="Tema Vocab">Travel</td><td data-label="Listening Tier">BBC/TED intro</td><td data-label="Reading Tier">Blog travel</td><td data-label="Milestone">Bisa retelling percakapan</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Reported Speech (question &amp; command) + Review</td><td data-label="Tema Vocab">Travel lanjutan</td><td data-label="Listening Tier">Mixed review</td><td data-label="Reading Tier">Mixed review</td><td data-label="Milestone"><strong>Progress check informal</strong></td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-3">
+<summary>📅 MONTH 3 — Clauses Dasar | TOEFL: 490 | Vocab kumulatif: 2.100</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Relative Clause (defining)</td><td data-label="Tema Vocab">Business Basic</td><td data-label="Listening Tier">TED Talk (subtitle EN)</td><td data-label="Reading Tier">Blog bisnis</td><td data-label="Milestone">Bisa gabung 2 kalimat pakai relative clause</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Relative Clause (non-defining) + omission</td><td data-label="Tema Vocab">Business lanjutan</td><td data-label="Listening Tier">TED Talk</td><td data-label="Reading Tier">Blog bisnis</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Adjective Clause reduction (intro)</td><td data-label="Tema Vocab">Technology</td><td data-label="Listening Tier">ESL Podcast</td><td data-label="Reading Tier">Artikel tech ringan</td><td data-label="Milestone">Mulai kenal reduced clause</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Review + TOEFL Prediction Test #1</td><td data-label="Tema Vocab">Technology lanjutan</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Mixed</td><td data-label="Milestone"><strong>Prediction Test #1</strong></td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-4">
+<summary>📅 MONTH 4 — Noun &amp; Adverb Clause + Mock Test #1 | TOEFL: 500 | Vocab kumulatif: 3.000</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Noun Clause (that-clause, wh-clause)</td><td data-label="Tema Vocab">Programming Basic 1 (variable, function)</td><td data-label="Listening Tier">TED Talk / tech YouTube</td><td data-label="Reading Tier">MDN docs intro</td><td data-label="Milestone">Baca 1 baris dokumentasi paham struktur</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Noun Clause (if/whether)</td><td data-label="Tema Vocab">Programming Basic 1 lanjutan</td><td data-label="Listening Tier">Fireship/freeCodeCamp</td><td data-label="Reading Tier">Docs lanjutan</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Adverb Clause (time, reason)</td><td data-label="Tema Vocab">TOEFL Vocab Batch 1</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Docs</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Adverb Clause (contrast, purpose) + <strong>MOCK TEST #1 (full)</strong></td><td data-label="Tema Vocab">TOEFL Vocab Batch 1 lanjutan</td><td data-label="Listening Tier">—</td><td data-label="Reading Tier">—</td><td data-label="Milestone"><strong>Full Mock Test #1, Skor: 500</strong></td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-5">
+<summary>📅 MONTH 5 — Conditional &amp; Modal | TOEFL: 510 | Vocab kumulatif: 3.900</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Conditional Type 0 &amp; 1</td><td data-label="Tema Vocab">Programming Basic 2 (API, database)</td><td data-label="Listening Tier">Fireship, Syntax.fm</td><td data-label="Reading Tier">Docs API sederhana</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Conditional Type 2 &amp; 3 + Mixed</td><td data-label="Tema Vocab">Programming Basic 2 lanjutan</td><td data-label="Listening Tier">Podcast tech</td><td data-label="Reading Tier">Docs lanjutan</td><td data-label="Milestone">Bisa jelaskan "jika X maka Y" teknis</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Modal Verbs (deduction, advice)</td><td data-label="Tema Vocab">Science</td><td data-label="Listening Tier">TED-Ed science</td><td data-label="Reading Tier">Artikel sains ringan</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Modal Verbs (past modals) + Error Analysis mulai</td><td data-label="Tema Vocab">Science lanjutan</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Mixed</td><td data-label="Milestone"><strong>Error Analysis Log dimulai</strong></td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-6">
+<summary>📅 MONTH 6 — Gerund/Infinitive &amp; Reduced Clause + Simulation #1 | TOEFL: 520 | Vocab kumulatif: 4.800</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Gerund vs Infinitive (verb patterns)</td><td data-label="Tema Vocab">Economy</td><td data-label="Listening Tier">NPR / CNN 10</td><td data-label="Reading Tier">Artikel ekonomi</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Gerund/Infinitive lanjutan (preposition + gerund)</td><td data-label="Tema Vocab">Economy lanjutan</td><td data-label="Listening Tier">CNN 10</td><td data-label="Reading Tier">Artikel ekonomi</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Reduced Clause (participle phrase)</td><td data-label="Tema Vocab">Health</td><td data-label="Listening Tier">Documentary intro</td><td data-label="Reading Tier">Scientific article ringan</td><td data-label="Milestone">Baca 1 dokumen sains tanpa translate</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Review total + <strong>QUARTERLY TOEFL SIMULATION #1 (Full)</strong></td><td data-label="Tema Vocab">Health lanjutan</td><td data-label="Listening Tier">—</td><td data-label="Reading Tier">—</td><td data-label="Milestone"><strong>Simulasi Kuarter 1, Skor: 520</strong></td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-7">
+<summary>📅 MONTH 7 — Inversion &amp; Advanced Structure | TOEFL: 525 | Vocab kumulatif: 5.700</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Inversion (negative adverbial: Never have I...)</td><td data-label="Tema Vocab">AWL Batch 1 (sublist 1-2)</td><td data-label="Listening Tier">Documentary</td><td data-label="Reading Tier">Research abstract</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Inversion (conditional without if)</td><td data-label="Tema Vocab">AWL Batch 1 (sublist 3-4)</td><td data-label="Listening Tier">Documentary</td><td data-label="Reading Tier">Research abstract</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Parallel Structure &amp; Comparative lanjutan</td><td data-label="Tema Vocab">Politics + AWL sublist 5</td><td data-label="Listening Tier">Native podcast</td><td data-label="Reading Tier">Artikel politik ringan</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Review + <strong>Presentasi teknis 5 menit (rekam video)</strong></td><td data-label="Tema Vocab">Politics lanjutan</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Mixed</td><td data-label="Milestone"><strong>Milestone: presentasi 5 menit</strong></td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-8">
+<summary>📅 MONTH 8 — Advanced Sentence Structure + Mock Test #2 | TOEFL: 535 | Vocab kumulatif: 6.600</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Compound-Complex Sentence</td><td data-label="Tema Vocab">AWL Batch 2 (sublist 6-7)</td><td data-label="Listening Tier">Series (tanpa subtitle, easy)</td><td data-label="Reading Tier">Novel mulai</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Cleft Sentence &amp; Emphasis</td><td data-label="Tema Vocab">AWL Batch 2 (sublist 8-9)</td><td data-label="Listening Tier">Series</td><td data-label="Reading Tier">Novel</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Academic Grammar (nominalization, hedging)</td><td data-label="Tema Vocab">Idioms &amp; Collocation set 1</td><td data-label="Listening Tier">Native conversation podcast</td><td data-label="Reading Tier">Academic journal intro</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Review + <strong>MOCK TEST #2 (full)</strong></td><td data-label="Tema Vocab">AWL sublist 10</td><td data-label="Listening Tier">—</td><td data-label="Reading Tier">—</td><td data-label="Milestone"><strong>Full Mock Test #2, Skor: 535</strong></td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-9">
+<summary>📅 MONTH 9 — Fluency Integration | TOEFL: 545 | Vocab kumulatif: 7.320</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Interleaved review (semua clause + reduced)</td><td data-label="Tema Vocab">Phrasal Verb set 1</td><td data-label="Listening Tier">Movie (tanpa subtitle)</td><td data-label="Reading Tier">Novel + Journal</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Interleaved review (passive + reported + conditional)</td><td data-label="Tema Vocab">Phrasal Verb set 2</td><td data-label="Listening Tier">Movie</td><td data-label="Reading Tier">Journal</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Speed grammar drill (timed)</td><td data-label="Tema Vocab">Synonym/Antonym set 1</td><td data-label="Listening Tier">Real meeting recording</td><td data-label="Reading Tier">Journal lanjutan</td><td data-label="Milestone">Ikut 1 mock meeting internasional</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Full grammar review + weak-point drilling</td><td data-label="Tema Vocab">Synonym/Antonym set 2</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Mixed</td><td data-label="Milestone">—</td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-10">
+<summary>📅 MONTH 10 — TOEFL Intensif + Simulation #2 | TOEFL: 550 | Vocab kumulatif: 7.920</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1-3</td><td data-label="Grammar Fokus">Timed practice tiap section (Listening/Structure/Reading bergantian tiap hari)</td><td data-label="Tema Vocab">TOEFL High-Frequency Vocab</td><td data-label="Listening Tier">Full-length listening sets</td><td data-label="Reading Tier">Full-length reading sets</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus"><strong>QUARTERLY TOEFL SIMULATION #2 (Full, timed, kondisi mirip ujian asli)</strong></td><td data-label="Tema Vocab">Review</td><td data-label="Listening Tier">—</td><td data-label="Reading Tier">—</td><td data-label="Milestone"><strong>Simulasi Kuarter 2, Skor: 550</strong></td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-11">
+<summary>📅 MONTH 11 — Peak Performance | TOEFL: 555 | Vocab kumulatif: 8.400</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1-3</td><td data-label="Grammar Fokus">Mock test mingguan + error drilling harian</td><td data-label="Tema Vocab">Advanced Tech/Academic (cloud, DevOps, research terms)</td><td data-label="Listening Tier">Native podcast/meeting</td><td data-label="Reading Tier">Academic journal full paper</td><td data-label="Milestone"><strong>Interview kerja simulasi (rekam + evaluasi AI)</strong></td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus">Full review seluruh grammar + vocab gap-filling</td><td data-label="Tema Vocab">Review</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Mixed</td><td data-label="Milestone">—</td></tr></tbody></table></div>
+</div></details>
+<details class="month-card" id="month-12">
+<summary>📅 MONTH 12 — Exam Ready | TOEFL: 560+ | Vocab kumulatif: 8.760</summary><div class="month-body">
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Minggu</th><th>Grammar Fokus</th><th>Tema Vocab</th><th>Listening Tier</th><th>Reading Tier</th><th>Milestone</th></tr></thead><tbody><tr><td data-label="Minggu">1</td><td data-label="Grammar Fokus">Full mock test (kondisi ujian asli) 2x</td><td data-label="Tema Vocab">Review total</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Mixed</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">2</td><td data-label="Grammar Fokus">Fine-tuning kelemahan spesifik</td><td data-label="Tema Vocab">Review total</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Mixed</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">3</td><td data-label="Grammar Fokus">Full mock test 2x + light review</td><td data-label="Tema Vocab">Review total</td><td data-label="Listening Tier">Mixed</td><td data-label="Reading Tier">Mixed</td><td data-label="Milestone">—</td></tr><tr><td data-label="Minggu">4</td><td data-label="Grammar Fokus"><strong>Tapering (kurangi intensitas 2 hari sebelum ujian) + REAL TOEFL ITP TEST</strong></td><td data-label="Tema Vocab">—</td><td data-label="Listening Tier">—</td><td data-label="Reading Tier">—</td><td data-label="Milestone"><strong>🎯 TARGET: 560+</strong></td></tr></tbody></table></div>
+</div></details>
+  </div>
+</section>
+
+<section id="sec-milestone" class="content-section">
+  <div class="section-head">
+    <span class="section-num">10</span>
+    <h2>Milestone &amp; Checklist</h2>
+  </div>
+  <div class="section-body">
+    <h3 class="sub-h3">🏁 Milestone Utama (Quarterly)</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Kuartal</th><th>Bulan</th><th>Milestone Besar</th></tr></thead><tbody><tr><td data-label="Kuartal">Q1</td><td data-label="Bulan">1-3</td><td data-label="Milestone Besar">Fondasi grammar &amp; 2.100 vocab, TOEFL 490, ngobrol dasar 5-10 menit</td></tr><tr><td data-label="Kuartal">Q2</td><td data-label="Bulan">4-6</td><td data-label="Milestone Besar">Mock Test #1 (500), Simulation #1 (520), baca dokumentasi teknis dasar</td></tr><tr><td data-label="Kuartal">Q3</td><td data-label="Bulan">7-9</td><td data-label="Milestone Besar">Mock Test #2 (535), presentasi 5 menit, diskusi 20 menit dengan AI</td></tr><tr><td data-label="Kuartal">Q4</td><td data-label="Bulan">10-12</td><td data-label="Milestone Besar">Simulation #2 (550), interview simulasi, <strong>Real Test 560+</strong></td></tr></tbody></table></div>
+<h3 class="sub-h3">✅ CHECKLIST HARIAN</h3>
+<ul class="styled-list">
+<li>[ ] Review flashcard SRS (20 menit)</li>
+<li>[ ] Belajar/latihan grammar (25 menit)</li>
+<li>[ ] Listening sesuai tahap (25 menit)</li>
+<li>[ ] Reading sesuai tahap (30 menit)</li>
+<li>[ ] Speaking practice + rekam (25 menit)</li>
+<li>[ ] Writing (20 menit)</li>
+<li>[ ] Input 10 kata baru ke SRS (15 menit)</li>
+<li>[ ] Catat 1 kesalahan besar hari ini di Error Log</li>
+</ul>
+<h3 class="sub-h3">✅ CHECKLIST MINGGUAN</h3>
+<ul class="styled-list">
+<li>[ ] 6 hari belajar selesai (1 hari rest)</li>
+<li>[ ] Total vocab baru minggu ini tercapai (lihat Bagian 3)</li>
+<li>[ ] 1x kuis campuran (grammar+vocab)</li>
+<li>[ ] 1x rekaman speaking direview ulang (self-evaluate atau pakai AI)</li>
+<li>[ ] 1x sesi TOEFL practice (mulai bulan 3)</li>
+<li>[ ] Weekly Review ditulis (lihat Bagian 13)</li>
+</ul>
+  </div>
+</section>
+
+<section id="sec-resources" class="content-section">
+  <div class="section-head">
+    <span class="section-num">11</span>
+    <h2>Resource Gratis</h2>
+  </div>
+  <div class="section-body">
+    <h3 class="sub-h3">🎧 Listening / YouTube / Podcast</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Nama</th><th>Jenis</th><th>Level</th><th>Link/Cara Akses</th></tr></thead><tbody><tr><td data-label="Nama">VOA Learning English</td><td data-label="Jenis">Website/YouTube/Podcast</td><td data-label="Level">A2-B1</td><td data-label="Link/Cara Akses">learningenglish.voanews.com</td></tr><tr><td data-label="Nama">BBC Learning English (6 Minute English)</td><td data-label="Jenis">Podcast/YouTube</td><td data-label="Level">B1-B2</td><td data-label="Link/Cara Akses">bbc.co.uk/learningenglish</td></tr><tr><td data-label="Nama">TED / TED-Ed</td><td data-label="Jenis">YouTube</td><td data-label="Level">B2-C1</td><td data-label="Link/Cara Akses">ted.com / YouTube</td></tr><tr><td data-label="Nama">Luke's English Podcast</td><td data-label="Jenis">Podcast</td><td data-label="Level">B1-C1</td><td data-label="Link/Cara Akses">Spotify/YouTube</td></tr><tr><td data-label="Nama">ESLPod</td><td data-label="Jenis">Podcast</td><td data-label="Level">B1-B2</td><td data-label="Link/Cara Akses">eslpod.com</td></tr><tr><td data-label="Nama">Fireship</td><td data-label="Jenis">YouTube (tech)</td><td data-label="Level">B2-C1</td><td data-label="Link/Cara Akses">YouTube "Fireship"</td></tr><tr><td data-label="Nama">freeCodeCamp</td><td data-label="Jenis">YouTube (tech)</td><td data-label="Level">B2-C1</td><td data-label="Link/Cara Akses">YouTube "freeCodeCamp"</td></tr><tr><td data-label="Nama">Syntax.fm</td><td data-label="Jenis">Podcast (web dev)</td><td data-label="Level">B2-C1</td><td data-label="Link/Cara Akses">Spotify</td></tr><tr><td data-label="Nama">NPR / CNN 10</td><td data-label="Jenis">YouTube/Website</td><td data-label="Level">B2-C1</td><td data-label="Link/Cara Akses">cnn10 (YouTube), npr.org</td></tr><tr><td data-label="Nama">Lex Fridman Podcast</td><td data-label="Jenis">Podcast/YouTube</td><td data-label="Level">C1</td><td data-label="Link/Cara Akses">Spotify/YouTube</td></tr></tbody></table></div>
+<h3 class="sub-h3">📖 Reading / Dokumentasi</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Nama</th><th>Jenis</th><th>Cara Akses</th></tr></thead><tbody><tr><td data-label="Nama">MDN Web Docs</td><td data-label="Jenis">Dokumentasi teknis</td><td data-label="Cara Akses">developer.mozilla.org</td></tr><tr><td data-label="Nama">freeCodeCamp News</td><td data-label="Jenis">Blog tech</td><td data-label="Cara Akses">freecodecamp.org/news</td></tr><tr><td data-label="Nama">Simple English Wikipedia</td><td data-label="Jenis">Reading dasar</td><td data-label="Cara Akses">simple.wikipedia.org</td></tr><tr><td data-label="Nama">Graded Readers (Oxford Bookworms - cari versi gratis/legal)</td><td data-label="Jenis">Short story</td><td data-label="Cara Akses">Perpustakaan digital/Archive</td></tr><tr><td data-label="Nama">arXiv.org</td><td data-label="Jenis">Research paper (CS)</td><td data-label="Cara Akses">arxiv.org (baca abstract &amp; intro dulu)</td></tr><tr><td data-label="Nama">Medium (tech tag)</td><td data-label="Jenis">Blog</td><td data-label="Cara Akses">medium.com</td></tr></tbody></table></div>
+<h3 class="sub-h3">📱 App &amp; Tools</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Nama</th><th>Fungsi</th><th>Gratis?</th></tr></thead><tbody><tr><td data-label="Nama">Anki</td><td data-label="Fungsi">Spaced Repetition Vocabulary</td><td data-label="Gratis?">Ya (desktop/Android; iOS berbayar)</td></tr><tr><td data-label="Nama">Grammarly (free tier)</td><td data-label="Fungsi">Grammar checker dasar</td><td data-label="Gratis?">Ya (fitur terbatas)</td></tr><tr><td data-label="Nama">Elsa Speak (free tier)</td><td data-label="Fungsi">Pronunciation evaluator</td><td data-label="Gratis?">Ya (terbatas)</td></tr><tr><td data-label="Nama">YouGlish</td><td data-label="Fungsi">Cek pengucapan kata dalam konteks video asli</td><td data-label="Gratis?">Ya</td></tr><tr><td data-label="Nama">Forvo</td><td data-label="Fungsi">Kamus pengucapan</td><td data-label="Gratis?">Ya</td></tr><tr><td data-label="Nama">Cambridge Dictionary / Merriam-Webster</td><td data-label="Fungsi">Kamus + contoh kalimat</td><td data-label="Gratis?">Ya</td></tr><tr><td data-label="Nama">Quizlet</td><td data-label="Fungsi">Flashcard alternatif</td><td data-label="Gratis?">Ya</td></tr><tr><td data-label="Nama">Language Reactor (ekstensi Chrome)</td><td data-label="Fungsi">Subtitle dual-language untuk Netflix/YouTube</td><td data-label="Gratis?">Ya (freemium)</td></tr></tbody></table></div>
+<h3 class="sub-h3">📚 Buku (cari versi gratis/legal: perpustakaan digital, Open Library, dsb.)</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Buku</th><th>Fokus</th></tr></thead><tbody><tr><td data-label="Buku">English Grammar in Use — Raymond Murphy</td><td data-label="Fokus">Grammar intermediate</td></tr><tr><td data-label="Buku">Advanced Grammar in Use — Martin Hewings</td><td data-label="Fokus">Grammar advanced</td></tr><tr><td data-label="Buku">504 Absolutely Essential Words</td><td data-label="Fokus">Vocabulary dasar-menengah</td></tr><tr><td data-label="Buku">Barron's TOEFL ITP</td><td data-label="Fokus">TOEFL ITP khusus</td></tr><tr><td data-label="Buku">Delta's Key to the TOEFL ITP Test</td><td data-label="Fokus">TOEFL ITP khusus</td></tr><tr><td data-label="Buku">Word Power Made Easy — Norman Lewis</td><td data-label="Fokus">Vocabulary building</td></tr><tr><td data-label="Buku">Longman Academic Word List</td><td data-label="Fokus">AWL</td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section id="sec-ai" class="content-section">
+  <div class="section-head">
+    <span class="section-num">12</span>
+    <h2>AI Companion</h2>
+  </div>
+  <div class="section-body">
+    <p>AI (Claude, ChatGPT, Gemini) bisa berperan sebagai <strong>8 jenis "guru"</strong> berbeda. Gunakan prompt di bawah, ganti bagian <code>[...]</code> sesuai kebutuhan.</p>
+<h3 class="sub-h3">1. Speaking Partner</h3>
+<div class="prompt-card">
+<p>"Act as a friendly native English speaker. Have a natural 15-minute conversation with me about [topik]. Ask me follow-up questions, don't correct me during the conversation — just respond naturally like a real chat. At the end, give me 3 corrections on grammar/vocabulary I used incorrectly."</p>
+</div>
+<h3 class="sub-h3">2. Grammar Checker</h3>
+<div class="prompt-card">
+<p>"Check the grammar of this text: '[teks saya]'. List every error, explain WHY it's wrong (the grammar rule), and show the corrected version. Then give me 3 similar practice sentences using the same rule."</p>
+</div>
+<h3 class="sub-h3">3. Pronunciation Evaluator</h3>
+<div class="prompt-card">
+<p>"I will describe how I pronounced this word/sentence: '[kata/kalimat]'. My pronunciation attempt was: [jelaskan usaha pengucapan, misal per suku kata]. Tell me the correct IPA transcription, common mistakes Indonesian speakers make with this word, and 3 minimal pairs to practice."</p>
+<p>*(Catatan: untuk evaluasi suara real-time, kombinasikan dengan Elsa Speak/YouGlish; AI teks tidak bisa dengar suara asli, tapi bisa bantu analisis fonetik &amp; drill.)*</p>
+</div>
+<h3 class="sub-h3">4. TOEFL Tutor</h3>
+<div class="prompt-card">
+<p>"Act as a TOEFL ITP tutor. Give me 10 Structure &amp; Written Expression questions at [easy/medium/hard] level, focused on [topik grammar, misal: reduced clause]. After I answer, grade me and explain each wrong answer in detail."</p>
+</div>
+<h3 class="sub-h3">5. Vocabulary Trainer</h3>
+<div class="prompt-card">
+<p>"Give me 15 new intermediate-advanced vocabulary words related to [tema, misal: software development]. For each word: definition in English, 1 example sentence, 1 collocation, and 1 synonym. Then quiz me on 5 of them at the end."</p>
+</div>
+<h3 class="sub-h3">6. Interview Simulator</h3>
+<div class="prompt-card">
+<p>"Act as a hiring manager interviewing me for a [posisi, misal: Backend Developer] role. Ask me 5 common interview questions one at a time, wait for my answer before moving to the next. At the end, give feedback on my English (grammar, vocabulary, confidence of expression) and content (using STAR method)."</p>
+</div>
+<h3 class="sub-h3">7. Debate Partner</h3>
+<div class="prompt-card">
+<p>"Let's debate. I will argue [posisi saya] on the topic '[topik]'. You argue the opposite side. Respond with strong counterarguments so I have to think and respond in English. After 5 exchanges, give me feedback on my argumentation and language use."</p>
+</div>
+<h3 class="sub-h3">8. Essay Evaluator</h3>
+<div class="prompt-card">
+<p>"Evaluate this essay: '[essay saya]'. Score it based on: grammar accuracy, vocabulary range, coherence/organization, and task achievement. Give a score out of 100 and specific suggestions for improvement, with rewritten examples of my weakest sentences."</p>
+</div>
+<h3 class="sub-h3">Bonus — Thinking in English Coach</h3>
+<div class="prompt-card">
+<p>"For the next conversation, only respond in English, and occasionally ask me to describe my current surroundings, feelings, or plans in English, like a casual friend checking in — this is to train my 'thinking in English' habit."</p>
+</div>
+  </div>
+</section>
+
+<section id="sec-eval" class="content-section">
+  <div class="section-head">
+    <span class="section-num">13</span>
+    <h2>Sistem Evaluasi</h2>
+  </div>
+  <div class="section-body">
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Jenis Evaluasi</th><th>Frekuensi</th><th>Cara</th></tr></thead><tbody><tr><td data-label="Jenis Evaluasi"><strong>Daily Checklist</strong></td><td data-label="Frekuensi">Harian</td><td data-label="Cara">Centang checklist Bagian 10, catat 1 kesalahan besar ke Error Log</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Weekly Review</strong></td><td data-label="Frekuensi">Tiap akhir minggu (Day 6 malam)</td><td data-label="Cara">Tulis: (1) skill paling improve, (2) skill paling lemah, (3) rencana perbaikan minggu depan. 1 paragraf jurnal dalam bahasa Inggris.</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Monthly Assessment</strong></td><td data-label="Frekuensi">Tiap akhir bulan</td><td data-label="Cara">Mini mock test (semua skill) + vocab test 100 kata random + rekam speaking 3 menit lalu bandingkan dengan rekaman bulan lalu</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Quarterly TOEFL Simulation</strong></td><td data-label="Frekuensi">Bulan 6 &amp; 10 (+ opsional bulan 3)</td><td data-label="Cara">Full mock test kondisi ujian asli (timed, tanpa jeda, di ruangan sepi)</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Vocabulary Test</strong></td><td data-label="Frekuensi">Mingguan</td><td data-label="Cara">SRS otomatis (Anki) + self-test 20 kata random dari minggu tersebut secara lisan</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Grammar Test</strong></td><td data-label="Frekuensi">Tiap akhir topik (mingguan)</td><td data-label="Cara">30-50 soal per topik + kuis campuran interleaved tiap 4 minggu</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Listening Test</strong></td><td data-label="Frekuensi">Mingguan (Day 6)</td><td data-label="Cara">10 soal pemahaman dari audio minggu ini</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Speaking Test</strong></td><td data-label="Frekuensi">Mingguan</td><td data-label="Cara">Rekam 2-3 menit topik bebas, self-review pakai rubric: fluency, grammar, vocab, pronunciation (skala 1-5 tiap aspek)</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Reading Test</strong></td><td data-label="Frekuensi">Mingguan</td><td data-label="Cara">10 soal pemahaman dari bacaan minggu ini</td></tr><tr><td data-label="Jenis Evaluasi"><strong>Writing Test</strong></td><td data-label="Frekuensi">Mingguan</td><td data-label="Cara">1 tulisan dievaluasi AI (pakai prompt Essay Evaluator di Bagian 12)</td></tr></tbody></table></div>
+<h3 class="sub-h3">📊 Rubric Self-Evaluation Speaking (skala 1-5)</h3>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Aspek</th><th>1 (Pemula)</th><th>3 (Cukup)</th><th>5 (Lancar)</th></tr></thead><tbody><tr><td data-label="Aspek">Fluency</td><td data-label="1 (Pemula)">Banyak jeda &amp; mikir</td><td data-label="3 (Cukup)">Sesekali jeda</td><td data-label="5 (Lancar)">Lancar tanpa jeda panjang</td></tr><tr><td data-label="Aspek">Grammar</td><td data-label="1 (Pemula)">Banyak error dasar</td><td data-label="3 (Cukup)">Error minor</td><td data-label="5 (Lancar)">Nyaris tanpa error</td></tr><tr><td data-label="Aspek">Vocabulary</td><td data-label="1 (Pemula)">Kata terbatas, repetitif</td><td data-label="3 (Cukup)">Cukup variatif</td><td data-label="5 (Lancar)">Variatif &amp; tepat konteks</td></tr><tr><td data-label="Aspek">Pronunciation</td><td data-label="1 (Pemula)">Sulit dipahami</td><td data-label="3 (Cukup)">Dipahami dengan effort</td><td data-label="5 (Lancar)">Jelas &amp; natural</td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section id="sec-tips" class="content-section">
+  <div class="section-head">
+    <span class="section-num">14</span>
+    <h2>Tips Konsistensi</h2>
+  </div>
+  <div class="section-body">
+    <ol class="styled-list">
+<li><strong>Habit Stacking</strong> — tempelkan belajar bahasa Inggris ke rutinitas yang sudah ada (misal: SRS review sambil sarapan, listening saat perjalanan/olahraga).</li>
+<li><strong>Jangan Skip, Kurangi</strong> — kalau capek, jangan skip total; kurangi jadi 30 menit ("minimum viable session") daripada 0 menit. Konsistensi &gt; intensitas.</li>
+<li><strong>Rekam Progress</strong> — simpan rekaman speaking tiap bulan; dengarkan ulang rekaman bulan pertama saat bulan ke-6 &amp; ke-12 — ini bukti nyata progress yang sangat memotivasi.</li>
+<li><strong>Gamifikasi</strong> — pakai streak counter (misal di Anki atau notes app), reward diri sendiri tiap milestone quarterly tercapai.</li>
+<li><strong>Accountability Partner</strong> — cari partner belajar (teman/komunitas online) untuk saling cek progress mingguan, atau laporkan progress ke AI companion tiap minggu.</li>
+<li><strong>Fokus pada Proses, Bukan Sempurna</strong> — target bukan "tidak boleh salah", tapi "belajar dari 1 kesalahan besar tiap hari" (Error Log).</li>
+<li><strong>Variasikan Konten</strong> — kalau bosan dengan 1 sumber (misal VOA), ganti podcast/channel lain di level yang sama; jangan berhenti belajar hanya karena bosan sumbernya.</li>
+<li><strong>Evaluasi Ulang Rencana Tiap Kuartal</strong> — setelah simulasi TOEFL kuartalan, sesuaikan rencana bulan berikutnya jika ada skill yang tertinggal (gunakan waktu ekstra untuk remedial, kurangi topik baru sementara).</li>
+<li><strong>Sleep &amp; Spacing Matter</strong> — SRS efektif karena otak butuh waktu untuk konsolidasi memori saat tidur; jangan begadang belajar maraton lalu skip beberapa hari.</li>
+<li><strong>Ingat "Kenapa"</strong> — tempelkan tujuan akhir (kerja IT, interview, TOEFL 560+) di tempat terlihat; review tujuan ini tiap awal bulan sebelum mulai matriks bulan baru.</li>
+</ol>
+  </div>
+</section>
+
+    <div class="footer">
+      <div class="footer-title">Selamat memulai perjalanan 12 bulan ini 🚀</div>
+      <p>Dokumen ini adalah kurikulum hidup — sesuaikan intensitas kalau ada minggu sibuk, tapi pertahankan struktur interleaving skill harian + SRS vocabulary + TOEFL practice terjadwal. Itulah yang membuatnya evidence-based, bukan sekadar jadwal biasa.</p>
+      <a href="#top" class="back-top">↑ Kembali ke atas</a>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var sidebar = document.getElementById('sidebar');
+  toggle.addEventListener('click', function(){
+    sidebar.classList.toggle('open');
+  });
+  var links = sidebar.querySelectorAll('.nav-link');
+  links.forEach(function(l){
+    l.addEventListener('click', function(){ sidebar.classList.remove('open'); });
+  });
+
+  var sections = document.querySelectorAll('.content-section');
+  var map = {};
+  links.forEach(function(l){ map[l.getAttribute('href').slice(1)] = l; });
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var id = entry.target.getAttribute('id');
+      var link = map[id];
+      if(!link) return;
+      if(entry.isIntersecting){
+        links.forEach(function(x){x.classList.remove('active');});
+        link.classList.add('active');
+      }
+    });
+  }, {rootMargin: '-20% 0px -70% 0px', threshold: 0});
+
+  sections.forEach(function(s){ observer.observe(s); });
+})();
+</script>
+
+</body>
+</html>
